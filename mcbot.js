@@ -9,18 +9,14 @@ var mcPort = process.env.mcport; // Your MC server port
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 var status;
 var statusID;
-var first = true;
+var isChecking = false;
 var interval;
 
 function start(){
-	if(first){
-		first = false;
+	if(isChecking){
+		isChecking = true;
 		update();
-		interval = setInterval(update,60000);
-	} else if(!first){
-		first = true
-		interval = clearInterval();
-		update();
+		interval = setInterval(update, 10000);
 	}
 }
 
@@ -67,7 +63,7 @@ function update() {
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log('Bot ready!');
-  client.user.setActivity("Bot ready! Type /status to check", { type: 'PLAYING' })
+  client.user.setActivity("Type /status to check", { type: 'PLAYING' })
 });
 
 client.on("message", (message) => {
@@ -79,6 +75,19 @@ client.on("message", (message) => {
     start();
   }
 });
+
+client.on("message", (message) => {
+	if (message.content === '/stop') {
+		if(isChecking){
+			m = message.channel.send("Stopping the check.");
+			client.user.setActivity("Type /status to check", { type: 'PLAYING' })
+			interval = clearInterval();
+			isChecking = false;
+			} else 
+				if(!isChecking) {
+				m = message.channel.send("There are no server checks in progress.");
+				}
+	}
 
 client.on("message", (message) => {
   if (message.content.startsWith("ping")) {
