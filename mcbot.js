@@ -53,9 +53,8 @@ function update() {
         client.user.setStatus('dnd')
         //.then(console.log)
         .catch(console.error);
-	client.user.setActivity("Can't reach server, Aternos error?", { type: 'PLAYING' })
       }
-      client.user.setActivity(status, { type: 'PLAYING' })
+      client.user.setActivity("Server offline / Aternos API error.", { type: 'PLAYING' })
       .then(presence => console.log(status))
       .catch(console.error);
   });
