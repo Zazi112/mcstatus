@@ -36,6 +36,8 @@ function update() {
             //.then(console.log)
             .catch(console.error);
 			client.user.setActivity("Server offline", { type: 'PLAYING' });
+			isChecking = false;
+			clearInterval(interval);
 	    console.log("Server offline");
           }else{
             client.user.setStatus('online')
@@ -53,6 +55,8 @@ function update() {
         client.user.setStatus('dnd')
         //.then(console.log)
         .catch(console.error);
+		isChecking = false;
+			clearInterval(interval);
       }
       client.user.setActivity("Server offline / Aternos API error.", { type: 'PLAYING' })
       .then(presence => console.log(status))
