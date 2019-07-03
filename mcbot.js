@@ -20,6 +20,7 @@ function start(){
 	} else if(!first){
 		first = true
 		interval = clearInterval();
+	}
 }
 
 function update() {
