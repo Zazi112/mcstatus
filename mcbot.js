@@ -57,10 +57,10 @@ client.on("ready", () => {
 
 client.on("message", (message) => {
   if (message.content === '/status') {
-    m = message.channel.send("Bot is called! Calling checking routine.");
+    m = message.channel.send("Aw, I'm getting called. Checking your server status every one minute!");
     client.user.setActivity("Checking server status.", { type: 'PLAYING' });
-    //client.setInterval(update,60000);
-    update();
+    client.setInterval(update,60000);
+    //update();
   }
 });
 
