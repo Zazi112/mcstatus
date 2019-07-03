@@ -29,7 +29,7 @@ function update() {
 			  return message.reply('Error getting Minecraft server status...');
 		  }
 		  body = JSON.parse(body);
-		  console.log("Online: " + body.online);
+		  console.log("Online: " + body.online);	
 		  if(body.online) {
 			  if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
 				client.user.setStatus('dnd')
