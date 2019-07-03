@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const msg = new Discord.Message();
 var statustring = "No signal";
 
 var request = require('request');
@@ -9,6 +10,10 @@ var mcPort = process.env.mcport; // Your MC server port
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 var status;
 var statusID;
+
+function test(){
+	msg(client, "Test", client.channel);
+}
 
 function update() {
   console.log("Update called")
@@ -71,6 +76,12 @@ client.on("message", (message) => {
   if (message.content.startsWith("ping")) {
     message.channel.send("pong!")
     .catch(console.error);
+  }
+});
+
+client.on("message", (message) => {
+  if (message.content.startsWith("test")) {
+    test();
   }
 });
 
