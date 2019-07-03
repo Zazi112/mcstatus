@@ -9,9 +9,17 @@ var mcPort = process.env.mcport; // Your MC server port
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 var status;
 var statusID;
+var boolean first = true;
+var interval;
 
-function test(){
-	message.channel.send("test");
+function start(){
+	if(first){
+		first = false;
+		update();
+		interval = setInterval(update,60000);
+	} else if(!first){
+		first = true
+		interval = clearInterval();
 }
 
 function update() {
@@ -66,8 +74,7 @@ client.on("message", (message) => {
 	m.id = statusID;
 	console.log("Message ID: " + statusID);
     client.user.setActivity("Checking server status.", { type: 'PLAYING' });
-    client.setInterval(update,60000);
-    update();
+    start();
   }
 });
 
@@ -75,12 +82,6 @@ client.on("message", (message) => {
   if (message.content.startsWith("ping")) {
     message.channel.send("pong!")
     .catch(console.error);
-  }
-});
-
-client.on("message", (message) => {
-  if (message.content.startsWith("test")) {
-    test();
   }
 });
 
