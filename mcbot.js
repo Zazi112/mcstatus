@@ -4,8 +4,8 @@ const settings = require('./config.json');
 var statustring = "No signal";
 
 var request = require('request');
-var mcIP = settings.ip; // Your MC server IP
-var mcPort = settings.port; // Your MC server port
+var mcIP = settings.mc-ip; // Your MC server IP
+var mcPort = settings.mc-port; // Your MC server port
 
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 
@@ -22,7 +22,7 @@ function update() {
       var status = '';
       console.log("Online: " + body.online);
       if(body.online) {
-          if((body.motd=="ง4This server is offline.\nง7powered by aternos.org")||(body.players.now>=body.players.max)){
+          if((body.motd=="ยง4This server is offline.\nยง7powered by aternos.org")||(body.players.now>=body.players.max)){
             client.user.setStatus('dnd')
             //.then(console.log)
             .catch(console.error);
