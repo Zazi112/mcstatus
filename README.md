@@ -1,2 +1,2 @@
 # mcstatusbot
-### Discord bot for server status
+### Heroku based Discord bot for server status
