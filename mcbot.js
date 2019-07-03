@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const msg = new Discord.Message();
 var statustring = "No signal";
 
 var request = require('request');
@@ -12,7 +11,7 @@ var status;
 var statusID;
 
 function test(){
-	client.channel.send("test");
+	message.channel.send("test");
 }
 
 function update() {
