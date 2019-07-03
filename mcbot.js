@@ -21,49 +21,50 @@ function start(){
 }
 
 function update() {
-  console.log("Update called")
-  console.log(interval);
-  request(url, function(err, response, body) {
-      if(err) {
-          console.log(err)
-          .catch(console.error);
-          return message.reply('Error getting Minecraft server status...');
-      }
-      body = JSON.parse(body);
-      console.log("Online: " + body.online);
-      if(body.online) {
-          if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
-            client.user.setStatus('dnd')
-            //.then(console.log)
-            .catch(console.error);
-			client.user.setActivity("Server offline", { type: 'PLAYING' });
+	console.log("Update called");
+		request(url, function(err, response, body) {
+		  if(err) {
+			  console.log(err)
+			  .catch(console.error);
+			  return message.reply('Error getting Minecraft server status...');
+		  }
+		  body = JSON.parse(body);
+		  console.log("Online: " + body.online);
+		  if(body.online) {
+			  if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
+				client.user.setStatus('dnd')
+				//.then(console.log)
+				.catch(console.error);
+				client.user.setActivity("Server offline", { type: 'PLAYING' });
+				isChecking = false;
+				clearInterval(interval);
+			console.log("Server offline");
+			  }else{
+				client.user.setStatus('online')
+				//.then(console.log)
+				.catch(console.error);
+			//console.log("Number of player: " + ((body.players.list).counters.length));
+				console.log("Server online");
+			  }
+				if(body.players.now) {
+					status = ' ' + body.players.now + '  of  ' + body.players.max;
+				  } else {
+					status = ' 0  of  ' + body.players.max;
+			}
+		  } else {
+			client.user.setStatus('dnd')
+			//.then(console.log)
+			.catch(console.error);
 			isChecking = false;
 			clearInterval(interval);
-	    console.log("Server offline");
-          }else{
-            client.user.setStatus('online')
-            //.then(console.log)
-            .catch(console.error);
-	    //console.log("Number of player: " + ((body.players.list).counters.length));
-            console.log("Server online");
-          }
-            if(body.players.now) {
-                status = ' ' + body.players.now + '  of  ' + body.players.max;
-              } else {
-                status = ' 0  of  ' + body.players.max;
-        }
-      } else {
-        client.user.setStatus('dnd')
-        //.then(console.log)
-        .catch(console.error);
-		isChecking = false;
-		clearInterval(interval);
-		client.user.setActivity("Server offline / Aternos API error.", { type: 'PLAYING' })
-      }
-      // .then(presence => console.log(status))
-      // .catch(console.error);
-  });
-
+			client.user.setActivity("Server offline / Aternos API error.", { type: 'PLAYING' })
+		  }
+		  // .then(presence => console.log(status))
+		  // .catch(console.error);
+		});
+	if(isChecking){
+	  console.log("This is a continuous update");
+  }
 }
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
