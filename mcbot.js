@@ -61,10 +61,11 @@ function update() {
 		  }
 		  // .then(presence => console.log(status))
 		  // .catch(console.error);
+			  if(isChecking){
+				  console.log("This is a continuous update");
+			  }
 		});
-	if(isChecking){
-	  console.log("This is a continuous update");
-  }
+	
 }
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
