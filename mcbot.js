@@ -88,6 +88,7 @@ client.on("message", (message) => {
 				m = message.channel.send("There are no server checks in progress.");
 				}
 	}
+});
 
 client.on("message", (message) => {
   if (message.content.startsWith("ping")) {
