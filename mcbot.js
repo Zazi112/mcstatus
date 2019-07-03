@@ -1,40 +1,38 @@
-//credit to vegeta897 for the request URL part from his 'Simple Minecraft server status bot'
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const settings = require('./config.json');
 var statustring = "No signal";
 
 var request = require('request');
-var mcCommand = '/minecraft'; // Command for triggering
 var mcIP = settings.ip; // Your MC server IP
 var mcPort = settings.port; // Your MC server port
 
-var url = 'http://mcapi.us/server/status?ip=' + mcIP + '&port=' + mcPort;
+var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 
 
 function update() {
-  /*seconds = seconds + 1;
-  secondsString = seconds.toString();
-  client.user.setActivity(secondsString, { type: 'Playing' })
-  .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
-  .catch(console.error);*/
+  console.log("Update called")
   request(url, function(err, response, body) {
       if(err) {
-          console.log(err);
-          //return message.reply('Error getting Minecraft server status...');
+          console.log(err)
+          .catch(console.error);
+          return message.reply('Error getting Minecraft server status...');
       }
       body = JSON.parse(body);
-      var status = 'Server offline';
-      console.log(body.motd);
+      var status = '';
+      console.log("Online: " + body.online);
       if(body.online) {
-          if((body.motd=="&cWe are under maintenance.")||(body.players.now>=body.players.max)){
-            client.user.setStatus('idle')
+          if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
+            client.user.setStatus('dnd')
             //.then(console.log)
             .catch(console.error);
+	    console.log("Server offline");
           }else{
             client.user.setStatus('online')
             //.then(console.log)
             .catch(console.error);
+	    //console.log("Number of player: " + ((body.players.list).counters.length));
+            console.log("Server online");
           }
             if(body.players.now) {
                 status = ' ' + body.players.now + '  of  ' + body.players.max;
@@ -45,7 +43,7 @@ function update() {
         client.user.setStatus('dnd')
         //.then(console.log)
         .catch(console.error);
-
+	client.user.setActivity("Can't reach server, Aternos error?", { type: 'PLAYING' })
       }
       client.user.setActivity(status, { type: 'PLAYING' })
       .then(presence => console.log(status))
@@ -54,17 +52,24 @@ function update() {
 
 }
 client.on("ready", () => {
-  console.log("I am ready!");
-  client.setInterval(update,30000);
+  console.log(`Logged in as ${client.user.tag}!`);
+  client.user.setActivity("Bot ready! Type /status to check", { type: 'PLAYING' })
 });
 
-/*client.on("message", (message) => {
-  if (message.content.startsWith("ping")) {
-    message.channel.send("pong!");
+client.on("message", (message) => {
+  if (message.content === '/status') {
+    m = message.channel.send("Bot is called! Calling checking routine.");
+    client.user.setActivity("Checking server status.", { type: 'PLAYING' });
+    //client.setInterval(update,60000);
     update();
-
   }
-}
-);*/
+});
+
+client.on("message", (message) => {
+  if (message.content.startsWith("ping")) {
+    message.channel.send("pong!")
+    .catch(console.error);
+  }
+});
 
 client.login(settings.token);
