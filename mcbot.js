@@ -56,11 +56,11 @@ function update() {
         //.then(console.log)
         .catch(console.error);
 		isChecking = false;
-			clearInterval(interval);
+		clearInterval(interval);
+		client.user.setActivity("Server offline / Aternos API error.", { type: 'PLAYING' })
       }
-      client.user.setActivity("Server offline / Aternos API error.", { type: 'PLAYING' })
-      .then(presence => console.log(status))
-      .catch(console.error);
+      // .then(presence => console.log(status))
+      // .catch(console.error);
   });
 
 }
