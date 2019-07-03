@@ -35,6 +35,7 @@ function update() {
             client.user.setStatus('dnd')
             //.then(console.log)
             .catch(console.error);
+			client.user.setActivity("Server offline", { type: 'PLAYING' });
 	    console.log("Server offline");
           }else{
             client.user.setStatus('online')
