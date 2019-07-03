@@ -22,6 +22,7 @@ function start(){
 
 function update() {
   console.log("Update called")
+  console.log(interval);
   request(url, function(err, response, body) {
       if(err) {
           console.log(err)
