@@ -13,7 +13,7 @@ var isChecking = false;
 var interval;
 
 function start(){
-	if(isChecking){
+	if(!isChecking){
 		isChecking = true;
 		update();
 		interval = setInterval(update, 10000);
