@@ -9,7 +9,7 @@ var mcPort = process.env.mcport; // Your MC server port
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 var status;
 var statusID;
-boolean first = true;
+var first = true;
 var interval;
 
 function start(){
