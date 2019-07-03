@@ -4,8 +4,8 @@ const settings = require('./config.json');
 var statustring = "No signal";
 
 var request = require('request');
-var mcIP = settings.mc-ip; // Your MC server IP
-var mcPort = settings.mc-port; // Your MC server port
+var mcIP = process.env.mc-ip; // Your MC server IP
+var mcPort = process.env.mc-port; // Your MC server port
 
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 
@@ -72,4 +72,4 @@ client.on("message", (message) => {
   }
 });
 
-client.login(settings.token);
+client.login(process.env.token);
