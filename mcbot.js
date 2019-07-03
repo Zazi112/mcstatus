@@ -81,7 +81,7 @@ client.on("message", (message) => {
 		if(isChecking){
 			m = message.channel.send("Stopping the check.");
 			client.user.setActivity("Type /status to check", { type: 'PLAYING' })
-			interval = clearInterval();
+			clearInterval(interval);
 			isChecking = false;
 			} else 
 				if(!isChecking) {
