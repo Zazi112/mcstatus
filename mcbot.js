@@ -60,7 +60,7 @@ client.on("message", (message) => {
     m = message.channel.send("Aw, I'm getting called. Checking your server status every one minute!");
     client.user.setActivity("Checking server status.", { type: 'PLAYING' });
     client.setInterval(update,60000);
-    //update();
+    update();
   }
 });
 
