@@ -3,8 +3,8 @@ const client = new Discord.Client();
 var statustring = "No signal";
 
 var request = require('request');
-var mcIP = process.env.mc-ip; // Your MC server IP
-var mcPort = process.env.mc-port; // Your MC server port
+var mcIP = process.env.mcip; // Your MC server IP
+var mcPort = process.env.mcport; // Your MC server port
 
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 
