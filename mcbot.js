@@ -26,7 +26,7 @@ function update() {
 		  if(err) {
 			  console.log(err)
 			  .catch(console.error);
-			  return message.reply('Error getting Minecraft server status...');
+			  //return message.reply('Error getting Minecraft server status...');
 		  }
 		  body = JSON.parse(body);
 		  console.log("Online: " + body.online);	
@@ -48,9 +48,11 @@ function update() {
 			  }
 				if(body.players.now) {
 					status = ' ' + body.players.now + '  of  ' + body.players.max;
+					client.user.setActivity(status);
 				  } else {
 					status = ' 0  of  ' + body.players.max;
-			}
+					client.user.setActivity(status);
+				  }
 		  } else {
 			client.user.setStatus('dnd')
 			//.then(console.log)
