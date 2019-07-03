@@ -12,7 +12,7 @@ var status;
 var statusID;
 
 function test(){
-	msg(client, "Test", client.channel);
+	msg.channel.send("test!");
 }
 
 function update() {
@@ -56,7 +56,7 @@ function update() {
 
 }
 client.on("ready", () => {
-  console.log('Logged in as ${client.user.tag}!');
+  console.log(`Logged in as ${client.user.tag}!`);
   console.log('Bot ready!');
   client.user.setActivity("Bot ready! Type /status to check", { type: 'PLAYING' })
 });
