@@ -20,6 +20,7 @@ function start(){
 	} else if(!first){
 		first = true
 		interval = clearInterval();
+		update();
 	}
 }
 
@@ -73,7 +74,7 @@ client.on("message", (message) => {
   if (message.content === '/status') {
     m = message.channel.send("Aw, I'm getting called. Checking your server status every one minute!");
 	m.id = statusID;
-	console.log("Message ID: " + statusID);
+	console.log("Message ID: " + m.id);
     client.user.setActivity("Checking server status.", { type: 'PLAYING' });
     start();
   }
