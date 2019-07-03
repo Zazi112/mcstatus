@@ -12,7 +12,7 @@ var status;
 var statusID;
 
 function test(){
-	msg.channel.send("test!");
+	client.channel.send("test");
 }
 
 function update() {
