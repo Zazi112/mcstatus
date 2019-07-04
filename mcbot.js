@@ -135,7 +135,7 @@ client.on("message", async message => {
 		message.delete().catch(O_o=>{});
 		if(isChecking){
 			const p = await message.channel.send("Checking online players...");
-			const d = await message.channel.send("This feature is still on development.");
+			// const d = await message.channel.send("This feature is still on development.");
 			setTimeout(function(){
 				request(url, function(err, response, body) {
 						if(err) {
@@ -151,11 +151,11 @@ client.on("message", async message => {
 								var i;
 								var playerList = "\n\n"
 								for (i = 0; i < length; i++) {
-									playerList += players[i] + "\n";
+									playerList += "**-**" + players[i] + "\n";
 								} 
-							console.log(playerList);
-							console.log(players);
-							console.log(length);
+							// console.log(playerList);
+							// console.log(players);
+							// console.log(length);
 							if(length > 0){
 								p.edit(`**Players:** ` + playerList);
 							}
