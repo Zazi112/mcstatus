@@ -134,7 +134,6 @@ client.on("message", async message => {
 			m.delete().catch(O_o=>{});
 		},5000)
 	}
-}
 
 // purge command: (hidden from the list)
 
