@@ -182,4 +182,10 @@ client.on("message", async message => {
 	}	
 });
 
+if(!isChecking){
+	timeout = setTimeout(function(){
+	client.user.setActivity("Type +status to check server status", { type: 'PLAYING' })
+	}, 5000);
+}
+
 client.login(process.env.token);
