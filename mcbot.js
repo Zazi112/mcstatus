@@ -77,10 +77,11 @@ function playerList(){
 			  .catch(console.error);
 			  return message.reply('Error getting Minecraft server status...');
 		  }
-	body = JSON.parse(body);
-	} if(body.online) {
-		players = body.players.list;
-		console.log(players);
+		  body = JSON.parse(body);
+			if(body.online) {
+				players = body.players.list;
+				console.log(players);
+			}
 	}
 }
 
