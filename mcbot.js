@@ -105,7 +105,7 @@ client.on("message", async message => {
 							status = ' ' + body.players.now + '  of  ' + body.players.max;
 							client.user.setActivity(status);
 							// Edit the confirmation message to show the amount of online player
-							m.edit("========================\n                  Server is online!\n\n  With " + body.players.now + " player(s) currently online.\n========================")
+							m.edit("========================\n                  Server is **online**!\n\n  With **" + body.players.now + "** player(s) currently online.\n========================")
 						} else {
 							// There are no players in the server
 							// Set bot status
