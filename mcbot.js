@@ -149,7 +149,7 @@ client.on("message", async message => {
 							players = body.players.list;
 							length = (body.players.list).length;
 								var i;
-								var playerList = "'\n\n'"
+								var playerList = "\n\n"
 								for (i = 0; i < length; i++) {
 									playerList += players[i] + "\n";
 								} 
@@ -157,7 +157,7 @@ client.on("message", async message => {
 							console.log(players);
 							console.log(length);
 							if(length > 0){
-								p.edit(`**Players:** ` + players);
+								p.edit(`**Players:** ` + playerList);
 							}
 						} else {
 							p.edit("There are no players online :(");
