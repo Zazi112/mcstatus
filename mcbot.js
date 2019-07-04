@@ -130,7 +130,7 @@ client.on("message", async message => {
 			// Send error message
 			m.edit("**Error:** The check is already running");
 		}
-		client.setTimeout(function(){
+	client.setTimeout(function(){
 			m.delete().catch(O_o=>{});
 		},5000)
 	}
