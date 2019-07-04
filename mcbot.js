@@ -35,7 +35,7 @@ var interval;
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity("Type +status to check server status", { type: 'PLAYING' })
+  client.user.setActivity("Bot is loading", { type: 'PLAYING' })
 });
 
 client.on("message", async message => {
@@ -191,13 +191,13 @@ client.on("message", async message => {
 	
 	if(command === "help") {
 		message.delete().catch(O_o={});
-		const h = await message.channel.send("Help menu is still under development");
+		const h = await message.channel.send("**mcBot**\n**by:** *rendrop*\n\n**How to use:**\n\nUse the prefix (" - ") before the command\n\n\n**Command List:**\n\n1. **Help:** Show this help message\n\n2. **Status:** Start the Minecraft server check.\n\n3. **Player:** Show the list of online players (*Can only be done if the server check is running and the server is online*)\n\n4. **Stop:** Stop the Minecraft server check and reset the bot.\n\n**Notes:**\n\nSometimes it takes 2-5 minutes for the API to update.\nThat means sometimes the server check will report that the server is offline/online when it's not.\nThis however is a problem in McAPI system, not the bot.");
 	}	
 });
 
 if(!isChecking){
 	timeout = setTimeout(function(){
-	client.user.setActivity("Type +status to check server status", { type: 'PLAYING' })
+	client.user.setActivity("Type -help", { type: 'PLAYING' })
 	}, 5000);
 }
 
