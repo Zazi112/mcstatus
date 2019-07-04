@@ -59,7 +59,7 @@ function update() {
 			.catch(console.error);
 			isChecking = false;
 			clearInterval(interval);
-			client.user.setActivity("Server offline / Aternos API error.", { type: 'PLAYING' })
+			client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
 		  }
 		  // .then(presence => console.log(status))
 		  // .catch(console.error);
@@ -88,7 +88,7 @@ function playerList(){
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log('Bot ready!');
-  client.user.setActivity("Type /status to check", { type: 'PLAYING' })
+  client.user.setActivity("Type /status to check server status", { type: 'PLAYING' })
 });
 
 client.on("message", (message) => {
