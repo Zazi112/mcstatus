@@ -60,11 +60,11 @@ client.on("message", async message => {
 		message.delete().catch(O_o=>{});
 		// Calculates ping between sending a message and editing it, giving a nice round-trip latency.
 		// The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
-		const m = await message.channel.send("Checking server status.");
+		const m = await message.channel.send("Checking server status...");
 		if(!isChecking){
 			isChecking = true;
 			console.log("Update called");
-			client.user.setActivity("Checking server status", { type: 'PLAYING' });
+			client.user.setActivity("Checking server status...", { type: 'PLAYING' });
 			interval = setInterval(function(){
 				request(url, function(err, response, body) {
 					if(err) {
@@ -79,7 +79,7 @@ client.on("message", async message => {
 							client.user.setStatus('dnd')
 							//.then(console.log)
 							.catch(console.error);
-							m.edit(`Server is offline.`);
+							m.edit(`Server is offline :(`);
 							client.user.setActivity("Server offline", { type: 'PLAYING' });
 							isChecking = false;
 							clearInterval(interval);
@@ -98,7 +98,7 @@ client.on("message", async message => {
 						} else {
 							status = ' 0  of  ' + body.players.max;
 							client.user.setActivity(status);
-							m.edit(`Server is online! But it seems empty.`)
+							m.edit(`Server is online! But it seems empty :(`)
 						}
 					} else {
 						client.user.setStatus('dnd')
@@ -107,7 +107,7 @@ client.on("message", async message => {
 						isChecking = false;
 						clearInterval(interval);
 						m.edit(`Server is offline / there is an API error or lag`);
-						client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
+						client.user.setActivity("Server offline / API error :(", { type: 'PLAYING' })
 					}
 				});
 			},5000);
@@ -132,32 +132,36 @@ client.on("message", async message => {
 	}
 
 	if(command === "player") {
-		message.delete().catch(O_o=>{});
-		const p = await message.channel.send("Checking online players.");
-		const d = await message.channel.send("This feature is still on development.");
-		setTimeout(function(){
-			request(url, function(err, response, body) {
-					if(err) {
-					console.log(err)
-					.catch(console.error);
-					return message.reply('Error getting Minecraft server status...');
-				}
-			body = JSON.parse(body);
-				if(body.online) {
-					players = body.players.list;
-					length = (body.players.list).length;
-					console.log(players);
-					console.log(length);
-					if(length > 0){
-						p.edit(`Players: ` + players);
-					} else if (length < 1){
-						p.edit("There are no players online");
+		if(isChecking){
+			message.delete().catch(O_o=>{});
+			const p = await message.channel.send("Checking online players...");
+			const d = await message.channel.send("This feature is still on development.");
+			setTimeout(function(){
+				request(url, function(err, response, body) {
+						if(err) {
+						console.log(err)
+						.catch(console.error);
+						return message.reply('Error getting Minecraft server status... (McAPI is down?)');
 					}
-				} else {
-					p.edit("Error getting player list. The server seems to be offline. :(");
-				}
-			});
-		},2000);
+				body = JSON.parse(body);
+					if(body.online) {
+						players = body.players.list;
+						length = (body.players.list).length;
+						console.log(players);
+						console.log(length);
+						if(length > 0){
+							p.edit(`Players: ` + players);
+						} else if (length < 1){
+							p.edit("There are no players online :(");
+						}
+					} else {
+						p.edit("Error getting player list. The server seems to be offline :(");
+					}
+				});
+			},2000);
+		} else {
+			const e = await message.channel.send("Please check the server status first!");
+		}
 	}
 	
 	if(command === "stop") {
