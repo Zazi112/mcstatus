@@ -69,6 +69,21 @@ function update() {
 		});
 	
 }
+
+function playerList(){
+	request(url, function(err, response, body) {
+		  if(err) {
+			  console.log(err)
+			  .catch(console.error);
+			  return message.reply('Error getting Minecraft server status...');
+		  }
+	body = JSON.parse(body);
+	} if(body.online) {
+		players = body.players.list;
+		console.log(players);
+	}
+}
+
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log('Bot ready!');
@@ -82,6 +97,12 @@ client.on("message", (message) => {
 	console.log("Message ID: " + m.id);
     client.user.setActivity("Checking server status.", { type: 'PLAYING' });
     start();
+  }
+});
+
+client.on("message", (message) => {
+  if (message.content === '/player') {
+    playerList();
   }
 });
 
