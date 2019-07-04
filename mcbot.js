@@ -155,7 +155,7 @@ client.on("message", async message => {
 // player command: get the list of online players in server 
 // (if the server check routine is running)
 
-	if(command === "player") {
+	if(command === "player" || command === "players") {
 		message.delete().catch(O_o=>{});
 		// Check if the routine is running
 		if(isChecking){
