@@ -132,7 +132,7 @@ client.on("message", async message => {
 		}
 	client.setTimeout(function(){
 			m.delete().catch(O_o=>{});
-		},20000)
+		},20000).catch(O_o=>{});
 	}
 
 // purge command: (hidden from the list)
@@ -208,12 +208,12 @@ client.on("message", async message => {
 			const e = await message.channel.send("Please check the server status first!");
 			client.setTimeout(function(){
 				e.delete().catch(O_o=>{});
-			},5000);
+			},5000).catch(O_o=>{});
 		}
 		
 		client.setTimeout(function(){
 			p.delete().catch(O_o=>{});
-		},20000);
+		},20000).catch(O_o=>{});
 	}
 
 // stop command: stop the server check routine
@@ -297,7 +297,7 @@ This message will self destruct in 10 seconds
 ==========================================`);
 	client.setTimeout(function(){
 			h.delete().catch(O_o=>{});
-		},10000);
+		},10000).catch(O_o=>{});
 	}	
 });
 
