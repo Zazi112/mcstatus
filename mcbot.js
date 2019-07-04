@@ -83,8 +83,8 @@ function playerList(){
 				length = (body.players.list).length;
 				console.log(players);
 				console.log(length);
-				client.user.channel.send.(message)
-					.then(message => console.log(`Sent message: ${message.content}`))
+				client.user.channel.send(message)
+					.then(message => console.log(`${message.content}`))
 					.catch(console.error);
 			}
 	});
