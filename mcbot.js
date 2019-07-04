@@ -79,8 +79,10 @@ function playerList(){
 		  }
 		  body = JSON.parse(body);
 			if(body.online) {
-				players = body.players;
+				players = body.players.list;
+				length = (body.players.list).length;
 				console.log(players);
+				console.log(length);
 			}
 	});
 }
