@@ -79,7 +79,7 @@ function playerList(){
 		  }
 		  body = JSON.parse(body);
 			if(body.online) {
-				players = body.players.list;
+				players = body.players;
 				console.log(players);
 			}
 	});
