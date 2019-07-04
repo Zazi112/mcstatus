@@ -277,6 +277,8 @@ That means sometimes the server check will report
 that the server is offline/online when it is not.
 This however is a problem in McAPI system, not the bot. :worried:
 
+==========================================
+
 This message will self destruct in 10 seconds
 
 ==========================================`);
