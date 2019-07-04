@@ -64,6 +64,7 @@ client.on("message", async message => {
 		if(!isChecking){
 			isChecking = true;
 			console.log("Update called");
+			client.user.setActivity("Checking server status", { type: 'PLAYING' });
 			interval = setInterval(function(){
 				request(url, function(err, response, body) {
 					if(err) {
