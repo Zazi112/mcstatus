@@ -167,6 +167,7 @@ client.on("message", async message => {
 		
 		if(isChecking){
 			setTimeout(function(){
+				clearInterval(interval);
 				s.edit("Check stopped");
 				client.user.setActivity("Type +status to check server status", { type: 'PLAYING' })
 			},2000);
