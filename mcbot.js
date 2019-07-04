@@ -130,6 +130,10 @@ client.on("message", async message => {
 			// Send error message
 			m.edit("**Error:** The check is already running");
 		}
+		client.setTimeout(function(){
+			m.delete().catch(O_o=>{});
+		},5000);
+	}
 	}
 
 // purge command: (hidden from the list)
@@ -203,7 +207,14 @@ client.on("message", async message => {
 		} else {
 			// Routine is not running, send error message
 			const e = await message.channel.send("Please check the server status first!");
+			client.setTimeout(function(){
+				e.delete().catch(O_o=>{});
+			},5000);
 		}
+		
+		client.setTimeout(function(){
+			p.delete().catch(O_o=>{});
+		},5000);
 	}
 
 // stop command: stop the server check routine
@@ -228,6 +239,9 @@ client.on("message", async message => {
 			// Routine is not running, edit the message
 			s.edit("There is no check ongoing");
 		}
+		client.setTimeout(function(){
+			s.delete().catch(O_o=>{});
+		},5000);
 	}
 
 // help command: show help message
