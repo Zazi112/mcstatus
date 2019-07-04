@@ -112,7 +112,10 @@ client.on("message", async message => {
 							status = ' 0  of  ' + body.players.max;
 							client.user.setActivity(status);
 							// Edit the confirmation message
-							m.edit(`Server is **online**! But it seems empty :(`)
+							m.edit(
+							`Server is **online**! 
+							But it seems empty :(`
+							)
 						}
 					} else {
 						client.user.setStatus('dnd')
@@ -130,9 +133,6 @@ client.on("message", async message => {
 			// Send error message
 			m.edit("**Error:** The check is already running");
 		}
-	client.setTimeout(function(){
-			m.delete().catch(O_o=>{});
-		},20000).catch(O_o=>{});
 	}
 
 // purge command: (hidden from the list)
@@ -208,12 +208,12 @@ client.on("message", async message => {
 			const e = await message.channel.send("Please check the server status first!");
 			client.setTimeout(function(){
 				e.delete().catch(O_o=>{});
-			},5000).catch(O_o=>{});
+			},5000);
 		}
 		
 		client.setTimeout(function(){
 			p.delete().catch(O_o=>{});
-		},20000).catch(O_o=>{});
+		},20000);
 	}
 
 // stop command: stop the server check routine
@@ -297,7 +297,7 @@ This message will self destruct in 10 seconds
 ==========================================`);
 	client.setTimeout(function(){
 			h.delete().catch(O_o=>{});
-		},10000).catch(O_o=>{});
+		},10000);
 	}	
 });
 
