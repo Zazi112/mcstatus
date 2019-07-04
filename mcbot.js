@@ -118,7 +118,7 @@ client.on("message", async message => {
 					client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
 				}
 			});
-		},10000);
+		},5000);
 	}
   }
 });
