@@ -145,7 +145,7 @@ client.on("message", async message => {
 					}
 				body = JSON.parse(body);
 					if(body.online) {
-						if(body.players.list){
+						if(body.players.list != null){
 							players = body.players.list;
 							length = (body.players.list).length;
 							console.log(players);
