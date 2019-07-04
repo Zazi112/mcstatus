@@ -20,10 +20,6 @@ function start(){
 	}
 }
 
-function update() {
-		
-}
-
 function playerList(){
 	request(url, function(err, response, body) {
 		  if(err) {
@@ -74,56 +70,58 @@ client.on("message", async message => {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
     const m = await message.channel.send("Checking server status.");
-	console.log("Update called");
-		request(url, function(err, response, body) {
-		  if(err) {
-			  console.log(err)
-			  .catch(console.error);
-			  //return message.reply('Error getting Minecraft server status...');
-		  }
-		  body = JSON.parse(body);
-		  console.log("Online: " + body.online);	
-		  if(body.online) {
-			  if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
-				client.user.setStatus('dnd')
-				//.then(console.log)
-				.catch(console.error);
-				m.edit(`Server is offline.`);
-				client.user.setActivity("Server offline", { type: 'PLAYING' });
-				isChecking = false;
-				clearInterval(interval);
-			console.log("Server offline");
-			  }else{
-				client.user.setStatus('online')
-				//.then(console.log)
-				.catch(console.error);
-			//console.log("Number of player: " + ((body.players.list).counters.length));
-				console.log("Server online");
-			  }
-				if(body.players.now) {
-					status = ' ' + body.players.now + '  of  ' + body.players.max;
-					client.user.setActivity(status);
-					m.edit(`"Server is online! With " + body.players.now + " playing."`)
+	if(!isChecking){
+		isChecking = true;
+		console.log("Update called");
+		interval = setInterval(function(){
+			request(url, function(err, response, body) {
+				if(err) {
+				  console.log(err)
+				  .catch(console.error);
+				  //return message.reply('Error getting Minecraft server status...');
+				}
+					body = JSON.parse(body);
+					console.log("Online: " + body.online);	
+				if(body.online) {
+					if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
+						client.user.setStatus('dnd')
+						//.then(console.log)
+						.catch(console.error);
+						m.edit(`Server is offline.`);
+						client.user.setActivity("Server offline", { type: 'PLAYING' });
+						isChecking = false;
+						clearInterval(interval);
+						console.log("Server offline");
+					  }else{
+						client.user.setStatus('online')
+						//.then(console.log)
+						.catch(console.error);
+					//console.log("Number of player: " + ((body.players.list).counters.length));
+						console.log("Server online");
+					  }
+						if(body.players.now) {
+							status = ' ' + body.players.now + '  of  ' + body.players.max;
+							client.user.setActivity(status);
+							m.edit(`"Server is online! With " + body.players.now + " playing."`)
+						  } else {
+							status = ' 0  of  ' + body.players.max;
+							client.user.setActivity(status);
+							m.edit(`Server is online! But it seems empty.`)
+						  }
 				  } else {
-					status = ' 0  of  ' + body.players.max;
-					client.user.setActivity(status);
-					m.edit(`Server is online! But it seems empty.`)
+					client.user.setStatus('dnd')
+					//.then(console.log)
+					.catch(console.error);
+					isChecking = false;
+					clearInterval(interval);
+					m.edit(`Server is offline / there is an API error or lag`);
+					client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
 				  }
-		  } else {
-			client.user.setStatus('dnd')
-			//.then(console.log)
-			.catch(console.error);
-			isChecking = false;
-			clearInterval(interval);
-			m.edit(`Server is offline / there is an API error or lag`);
-			client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
-		  }
-		  // .then(presence => console.log(status))
-		  // .catch(console.error);
-			  if(isChecking){
-				  console.log("This is a continuous update");
-			  }
-		});
-  }
+				if(isChecking){
+					console.log("This is a continuous update");
+				}
+			});
+		},10000);
 });
+
 client.login(process.env.token);
