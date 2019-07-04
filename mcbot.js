@@ -152,6 +152,7 @@ client.on("message", async message => {
 						p.edit(`Players: ` + players);
 					} else if (length < 1){
 						p.edit("There are no players online");
+					}
 				} else {
 					p.edit("Error getting player list. The server seems to be offline. :(");
 				}
