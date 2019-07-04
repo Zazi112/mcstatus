@@ -98,17 +98,17 @@ client.on("message", async message => {
 						.catch(console.error);
 					//console.log("Number of player: " + ((body.players.list).counters.length));
 						console.log("Server online");
-					  }
-						if(body.players.now) {
-							status = ' ' + body.players.now + '  of  ' + body.players.max;
-							client.user.setActivity(status);
-							m.edit(`"Server is online! With " + body.players.now + " playing."`)
-						  } else {
-							status = ' 0  of  ' + body.players.max;
-							client.user.setActivity(status);
-							m.edit(`Server is online! But it seems empty.`)
-						  }
-				  } else {
+					}
+					if(body.players.now) {
+						status = ' ' + body.players.now + '  of  ' + body.players.max;
+						client.user.setActivity(status);
+						m.edit(`"Server is online! With " + body.players.now + " playing."`)
+					} else {
+						status = ' 0  of  ' + body.players.max;
+						client.user.setActivity(status);
+						m.edit(`Server is online! But it seems empty.`)
+					}
+				} else {
 					client.user.setStatus('dnd')
 					//.then(console.log)
 					.catch(console.error);
@@ -116,14 +116,11 @@ client.on("message", async message => {
 					clearInterval(interval);
 					m.edit(`Server is offline / there is an API error or lag`);
 					client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
-				  }
-				if(isChecking){
-					console.log("This is a continuous update");
 				}
 			});
 		},10000);
 	}
   }
-}
+});
 
 client.login(process.env.token);
