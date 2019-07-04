@@ -145,13 +145,15 @@ client.on("message", async message => {
 					}
 				body = JSON.parse(body);
 					if(body.online) {
-						players = body.players.list;
-						length = (body.players.list).length;
-						console.log(players);
-						console.log(length);
-						if(length > 0){
-							p.edit(`Players: ` + players);
-						} else if (length < 1){
+						if(body.players.list){
+							players = body.players.list;
+							length = (body.players.list).length;
+							console.log(players);
+							console.log(length);
+							if(length > 0){
+								p.edit(`Players: ` + players);
+							}
+						} else {
 							p.edit("There are no players online :(");
 						}
 					} else {
