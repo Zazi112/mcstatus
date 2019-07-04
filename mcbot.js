@@ -281,7 +281,7 @@ This message will self destruct in 10 seconds
 
 ==========================================`);
 	client.setTimeout(function(){
-			h.delete();
+			h.delete().catch(O_o=>{});
 		},10000);
 	}	
 });
