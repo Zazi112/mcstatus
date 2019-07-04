@@ -157,7 +157,7 @@ client.on("message", async message => {
 							// console.log(players);
 							// console.log(length);
 							if(length > 0){
-								p.edit(`**Players:** ` + playerList);
+								p.edit(`**Player online:** ` + playerList);
 							}
 						} else {
 							p.edit("There are no players online :(");
