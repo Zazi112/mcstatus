@@ -156,9 +156,8 @@ client.on("message", async message => {
 				} else {
 					p.edit("Error getting player list. The server seems to be offline. :(");
 				}
-				});
-			},2000);
-		}
+			});
+		},2000);
 	}
 	
 	if(command === "stop") {
