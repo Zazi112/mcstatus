@@ -237,24 +237,15 @@ client.on("message", async message => {
 		// Help message
 		const h = await message.channel.send(`
 		==========================================
-\n
 \n:space_invader:                                  **[mcBot: alpha] **                                    :space_invader: 
 \n                                             by: *rendrop*
-\n
 \n==========================================
-\n
 \n                                     :notebook_with_decorative_cover:  **How to use**  :notebook_with_decorative_cover: 
-\n
 \n==========================================
-\n
 \n                  Use the prefix (" - ") before the command
-\n
 \n==========================================
-\n
 \n                                  :white_check_mark: **Command List** :white_check_mark: 
-\n
 \n==========================================
-\n
 \n    **• Help:** Show this help message
 \n
 \n    **• Status:** Start the Minecraft server check.
@@ -265,18 +256,13 @@ client.on("message", async message => {
 \n                                  and the server is online*)
 \n
 \n    **• Stop:** Stop the Minecraft server check and reset the bot.
-\n
 \n==========================================
-\n
 \n                                      :notepad_spiral: **Notes:** :notepad_spiral: 
-\n
 \n==========================================
-\n
 \nSometimes it takes 2-5 minutes for the API to update.
 \nThat means sometimes the server check will report 
 \nthat the server is offline/online when it is not.
 \nThis however is a problem in McAPI system, not the bot. :worried:
-\n
 \n==========================================`);
 	}	
 });
