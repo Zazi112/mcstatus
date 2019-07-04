@@ -82,7 +82,7 @@ function playerList(){
 				players = body.players.list;
 				console.log(players);
 			}
-	}
+	});
 }
 
 client.on("ready", () => {
