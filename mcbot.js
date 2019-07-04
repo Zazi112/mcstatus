@@ -83,7 +83,7 @@ function playerList(){
 				length = (body.players.list).length;
 				console.log(players);
 				console.log(length);
-				client.user.message.send(players);
+				client.user.message.channel.send(players);
 			}
 	});
 }
