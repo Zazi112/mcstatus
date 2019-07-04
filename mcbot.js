@@ -122,6 +122,8 @@ client.on("message", async message => {
 				}
 			});
 		},10000);
-	};
+	}
   }
+}
+
 client.login(process.env.token);
