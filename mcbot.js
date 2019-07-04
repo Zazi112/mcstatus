@@ -148,8 +148,12 @@ client.on("message", async message => {
 						if(body.players.list != null){
 							players = body.players.list;
 							length = (body.players.list).length;
-							length2 = (body.players.now)-1;
-							console.log(length2)
+								var i;
+								var playerList = "'\n\n'"
+								for (i = 0; i < length; i++) {
+									playerList += players[i] + "\n";
+								} 
+							console.log(playerList);
 							console.log(players);
 							console.log(length);
 							if(length > 0){
