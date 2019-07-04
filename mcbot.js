@@ -132,8 +132,8 @@ client.on("message", async message => {
 	}
 
 	if(command === "player") {
+		message.delete().catch(O_o=>{});
 		if(isChecking){
-			message.delete().catch(O_o=>{});
 			const p = await message.channel.send("Checking online players...");
 			const d = await message.channel.send("This feature is still on development.");
 			setTimeout(function(){
