@@ -172,6 +172,7 @@ client.on("message", async message => {
 			},2000);
 		} else {
 			s.edit("There is no check ongoing");
+		}
 	}
 	
 	if(command === "help") {
