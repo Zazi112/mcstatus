@@ -66,62 +66,79 @@ client.on("message", async message => {
   
   // Let's go with a few common example commands! Feel free to delete or change those.
   
-  if(command === "status") {
-	message.delete().catch(O_o=>{});
-    // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
-    // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
-    const m = await message.channel.send("Checking server status.");
-	if(!isChecking){
-		isChecking = true;
-		console.log("Update called");
-		interval = setInterval(function(){
-			request(url, function(err, response, body) {
-				if(err) {
-				  console.log(err)
-				  .catch(console.error);
-				  //return message.reply('Error getting Minecraft server status...');
-				}
-					body = JSON.parse(body);
-					console.log("Online: " + body.online);	
-				if(body.online) {
-					if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
+	if(command === "status") {
+		message.delete().catch(O_o=>{});
+		// Calculates ping between sending a message and editing it, giving a nice round-trip latency.
+		// The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
+		const m = await message.channel.send("Checking server status.");
+		if(!isChecking){
+			isChecking = true;
+			console.log("Update called");
+			interval = setInterval(function(){
+				request(url, function(err, response, body) {
+					if(err) {
+					  console.log(err)
+					  .catch(console.error);
+					  //return message.reply('Error getting Minecraft server status...');
+					}
+						body = JSON.parse(body);
+						console.log("Online: " + body.online);	
+					if(body.online) {
+						if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
+							client.user.setStatus('dnd')
+							//.then(console.log)
+							.catch(console.error);
+							m.edit(`Server is offline.`);
+							client.user.setActivity("Server offline", { type: 'PLAYING' });
+							isChecking = false;
+							clearInterval(interval);
+							console.log("Server offline");
+						  }else{
+							client.user.setStatus('online')
+							//.then(console.log)
+							.catch(console.error);
+						//console.log("Number of player: " + ((body.players.list).counters.length));
+							console.log("Server online");
+						}
+						if(body.players.now) {
+							status = ' ' + body.players.now + '  of  ' + body.players.max;
+							client.user.setActivity(status);
+							m.edit(`"Server is online! With " + body.players.now + " playing."`)
+						} else {
+							status = ' 0  of  ' + body.players.max;
+							client.user.setActivity(status);
+							m.edit(`Server is online! But it seems empty.`)
+						}
+					} else {
 						client.user.setStatus('dnd')
 						//.then(console.log)
 						.catch(console.error);
-						m.edit(`Server is offline.`);
-						client.user.setActivity("Server offline", { type: 'PLAYING' });
 						isChecking = false;
 						clearInterval(interval);
-						console.log("Server offline");
-					  }else{
-						client.user.setStatus('online')
-						//.then(console.log)
-						.catch(console.error);
-					//console.log("Number of player: " + ((body.players.list).counters.length));
-						console.log("Server online");
+						m.edit(`Server is offline / there is an API error or lag`);
+						client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
 					}
-					if(body.players.now) {
-						status = ' ' + body.players.now + '  of  ' + body.players.max;
-						client.user.setActivity(status);
-						m.edit(`"Server is online! With " + body.players.now + " playing."`)
-					} else {
-						status = ' 0  of  ' + body.players.max;
-						client.user.setActivity(status);
-						m.edit(`Server is online! But it seems empty.`)
-					}
-				} else {
-					client.user.setStatus('dnd')
-					//.then(console.log)
-					.catch(console.error);
-					isChecking = false;
-					clearInterval(interval);
-					m.edit(`Server is offline / there is an API error or lag`);
-					client.user.setActivity("Server offline / API error.", { type: 'PLAYING' })
-				}
-			});
-		},5000);
+				});
+			},5000);
+		}
 	}
+
+	if(command === "purge") {
+    // This command removes all messages from all users in the channel, up to 100.
+    
+    // get the delete count, as an actual number.
+    const deleteCount = parseInt(args[0], 10);
+    
+    // Ooooh nice, combined conditions. <3
+    if(!deleteCount || deleteCount < 2 || deleteCount > 100)
+      return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
+    
+    // So we get our messages, and delete them. Simple enough, right?
+    const fetched = await message.channel.fetchMessages({limit: deleteCount});
+    message.channel.bulkDelete(fetched)
+      .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
   }
+
 });
 
 client.login(process.env.token);
