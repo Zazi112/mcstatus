@@ -94,7 +94,7 @@ client.on("message", async message => {
 						if(body.players.now) {
 							status = ' ' + body.players.now + '  of  ' + body.players.max;
 							client.user.setActivity(status);
-							m.edit(`"Server is online! With " + body.players.now + " playing."`)
+							m.edit("Server is online! With " + body.players.now + " playing.")
 						} else {
 							status = ' 0  of  ' + body.players.max;
 							client.user.setActivity(status);
