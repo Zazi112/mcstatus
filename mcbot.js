@@ -132,7 +132,7 @@ client.on("message", async message => {
 		}
 	client.setTimeout(function(){
 			m.delete().catch(O_o=>{});
-		},5000)
+		},20000)
 	}
 
 // purge command: (hidden from the list)
@@ -213,7 +213,7 @@ client.on("message", async message => {
 		
 		client.setTimeout(function(){
 			p.delete().catch(O_o=>{});
-		},5000);
+		},20000);
 	}
 
 // stop command: stop the server check routine
