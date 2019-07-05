@@ -33,7 +33,7 @@ var interval;
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.setStatus('idle');
+  client.user.setStatus('idle');
   client.user.setActivity("Bot is loading", { type: 'PLAYING' })
 });
 
