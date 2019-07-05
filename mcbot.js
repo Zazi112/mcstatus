@@ -118,7 +118,7 @@ client.on("message", async message => {
 								client.user.setActivity(status + " | " + version);
 								// Edit the confirmation message
 								m.edit(
-								`===============\nServer is **online**!\nRunning: ` + version +`\nBut it seems empty :(\n===============`
+								`===============\n     Server is **online**!\n     Running: ` + version +`\n But it seems empty :(\n===============`
 								)
 							}
 					} else {
