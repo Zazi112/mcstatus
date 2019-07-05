@@ -310,12 +310,15 @@ function resetBot(){
 	if(!isChecking){
 		client.user.setStatus('idle');
 		client.user.setActivity("Type -help", { type: 'PLAYING' })
+		if(m){
+			m.delete().catch(O_o=>{}
+		}
 	}
 }
 
 // Reset the bot periodically if the checking routine stopped.
 // Either abruptly by an error or by server going offline, API downtime, and the stop command.
-client.setInterval(resetBot(), 5000)
+client.setInterval(resetBot(), 10000)
 	
 //END OF MINECRAFT SERVER CHECK
 
