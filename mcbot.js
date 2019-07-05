@@ -28,6 +28,7 @@ var mcPort = process.env.mcport; // Read var "mcport" from Heroku ENV
 var prefix = process.env.prefix; // Read var "prefix" from Heroku ENV
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 var status;
+var version;
 var isChecking = false;
 var interval;
 
@@ -79,7 +80,7 @@ client.on("message", async message => {
 					  //return message.reply('Error getting Minecraft server status...');
 					}
 						body = JSON.parse(body);
-						console.log("Online: " + body.online);	
+						// console.log("Online: " + body.online);	
 					if(body.online) {
 						if((body.motd=="§4This server is offline.\n§7powered by aternos.org")||(body.players.now>=body.players.max)){
 							client.user.setStatus('dnd')
@@ -89,37 +90,43 @@ client.on("message", async message => {
 							// Edit confirmation message
 							m.edit(`Server is offline :(`);
 							// Edit bot status
-							client.user.setActivity("Server offline", { type: 'PLAYING' });
+							client.user.setActivity("Server offline.", { type: 'PLAYING' });
 							// Stop the routine
 							isChecking = false;
 							clearInterval(interval);
 							// console.log("Server offline");
-						  }else{
+						}else{
 							client.user.setStatus('online')
 							//.then(console.log)
 							.catch(console.error);
-						//console.log("Number of player: " + ((body.players.list).counters.length));
-							// console.log("Server online");
+							version = body.server.name;
+							//console.log("Number of player: " + ((body.players.list).counters.length));
+							//console.log("Server online");
 						}
-						// Read the amount of player
-						if(body.players.now) {
-							// There are player(s) in the server
-							// Set bot status
-							status = ' ' + body.players.now + '  of  ' + body.players.max;
-							client.user.setActivity(status);
-							// Edit the confirmation message to show the amount of online player
-							m.edit("========================\n                  Server is **online**!\n\n  With **" + body.players.now + "** player(s) currently online.\n========================")
-						} else {
-							// There are no players in the server
-							// Set bot status
-							status = ' 0  of  ' + body.players.max;
-							client.user.setActivity(status);
-							// Edit the confirmation message
-							m.edit(
-							`Server is **online**! 
-							But it seems empty :(`
-							)
-						}
+							// Read the amount of player
+							if(body.players.now) {
+								// There are player(s) in the server
+								// Set bot status
+								status = ' ' + body.players.now + '  of  ' + body.players.max;
+								client.user.setActivity(status + " | " + version);
+								// Edit the confirmation message to show the amount of online player
+								m.edit("========================\n                  Server is **online**!\nRunning: " + version + "\n\n  With **" + body.players.now + "** player(s) currently online.\n========================")
+							} else {
+								// There are no players in the server
+								// Set bot status
+								status = ' 0  of  ' + body.players.max;
+								client.user.setActivity(status + " | " + version);
+								// Edit the confirmation message
+								m.edit(
+								`
+								=======================
+								 Server is **online**! 
+								 Running: ` + version +
+								`
+								 But it seems empty :(
+								=======================`
+								)
+							}
 					} else {
 						client.user.setStatus('dnd')
 						//.then(console.log)
@@ -208,7 +215,7 @@ client.on("message", async message => {
 			},2000);
 			client.setTimeout(function(){
 				p.delete().catch(O_o=>{});
-			},10000);
+			},20000);
 		} else {
 			// Routine is not running, send error message
 			const e = await message.channel.send("Please check the server status first!");
