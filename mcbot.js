@@ -19,7 +19,17 @@
 //											//
 //////////////////////////////////////////////
 
+// Start of Chromium-Headless
 
+const fs = require('fs');
+const webdriver = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
+const chromium = require('chromium');
+require('chromedriver');
+
+// End of Chromium-Headless
+
+// Start of Discord MC Bot
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var request = require('request');
@@ -31,6 +41,7 @@ var status;
 var version;
 var isChecking = false;
 var interval;
+// End of Discord MC Bot
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
