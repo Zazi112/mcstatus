@@ -1,23 +1,23 @@
-///////////////////////////////////////////////
-//                                           //
-//         Minecraft Server Checker          //
-//                Discord Bot                //
-//       (github.com/rendrop/mcstatus)       //
-//                                           //
-//                 7/4/2019                  //
-//              Private Release              //
-//                                           //
-//          copyright: rendrop @2019         //
-//                                           //
-///////////////////////////////////////////////
-//                                           //
-//                   Using:                  //
-//                                           //
-//                McAPI.us API               //
-//                 discord.js                //
-//                  request                  //
-//                                           //
-///////////////////////////////////////////////
+//////////////////////////////////////////////
+//                                          //
+//			Minecraft Server Checker		//
+//				  Discord Bot				//
+//			  (github.com/rendrop)			//
+//                                          //
+//              Private Release             //
+//                                          //
+//			copyright: rendrop @2019        //
+//                                          //
+//////////////////////////////////////////////
+//                                          //
+//					Using:					//
+//                                          //
+//				 McAPI.us API				//
+//				  discord.js				//
+//				   request					//
+//                                          //
+//											//
+//////////////////////////////////////////////
 
 
 const Discord = require("discord.js");
@@ -33,8 +33,11 @@ var interval;
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  cliet.setStatus('idle');
   client.user.setActivity("Bot is loading", { type: 'PLAYING' })
 });
+
+// START OF MINECRAFT SERVER CHECK
 
 client.on("message", async message => {
 	// This event will run on every single message received, from any channel or DM.
@@ -204,20 +207,15 @@ client.on("message", async message => {
 				});
 			},2000);
 			client.setTimeout(function(){
-			p.delete().catch(O_o=>{});
-		},10000);
+				p.delete().catch(O_o=>{});
+			},10000);
 		} else {
 			// Routine is not running, send error message
 			const e = await message.channel.send("Please check the server status first!");
 			client.setTimeout(function(){
 				e.delete().catch(O_o=>{});
 			},5000);
-			client.setTimeout(function(){
-			e.delete().catch(O_o=>{});
-		},5000);
 		}
-		
-		
 	}
 
 // stop command: stop the server check routine
@@ -234,6 +232,7 @@ client.on("message", async message => {
 				clearInterval(interval);
 				// Reset the bot
 				isChecking = false;
+				cliet.setStatus('idle');
 				client.user.setActivity("Type -help", { type: 'PLAYING' })
 				// Edit the message
 				s.edit("Check stopped");
@@ -305,12 +304,13 @@ This message will self destruct in 10 seconds
 	}	
 });
 
-// Reset the bot automatically if the checking routine stopped.
-// This can be caused by server going offline, API downtime, etc.
-// or the command stop
+// Reset the bot periodically if the checking routine stopped.
+// Either abruptly by an error or by server going offline, API downtime, and the stop command.
+
 if(!isChecking){
 	timeout = setTimeout(function(){
-	client.user.setActivity("Type -help", { type: 'PLAYING' })
+		cliet.setStatus('idle');
+		client.user.setActivity("Type -help", { type: 'PLAYING' })
 	}, 5000);
 }
 
