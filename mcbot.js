@@ -110,7 +110,7 @@ client.on("message", async message => {
 								status = ' ' + body.players.now + '  of  ' + body.players.max;
 								client.user.setActivity(status + " | " + version);
 								// Edit the confirmation message to show the amount of online player
-								m.edit("========================\n                  Server is **online**!\nRunning: " + version + "\n\n  With **" + body.players.now + "** player(s) currently online.\n========================")
+								m.edit("========================\n                  Server is **online**!\n                  Running: **" + version + "**\n\n  With **" + body.players.now + "** player(s) currently online.\n========================")
 							} else if(body.players.now == 0){
 								// There are no players in the server
 								// Set bot status
@@ -118,7 +118,7 @@ client.on("message", async message => {
 								client.user.setActivity(status + " | " + version);
 								// Edit the confirmation message
 								m.edit(
-								`===============\n     Server is **online**!\n     Running: ` + version +`\n But it seems empty :(\n===============`
+								`===============\n     Server is **online**!\n     Running: **` + version +`**\n But it seems empty :(\n===============`
 								)
 							}
 					} else {
