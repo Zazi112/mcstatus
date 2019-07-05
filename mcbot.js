@@ -203,17 +203,21 @@ client.on("message", async message => {
 					}
 				});
 			},2000);
+			client.setTimeout(function(){
+			p.delete().catch(O_o=>{});
+		},10000);
 		} else {
 			// Routine is not running, send error message
 			const e = await message.channel.send("Please check the server status first!");
 			client.setTimeout(function(){
 				e.delete().catch(O_o=>{});
 			},5000);
+			client.setTimeout(function(){
+			e.delete().catch(O_o=>{});
+		},5000);
 		}
 		
-		client.setTimeout(function(){
-			p.delete().catch(O_o=>{});
-		},20000);
+		
 	}
 
 // stop command: stop the server check routine
