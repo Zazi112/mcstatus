@@ -315,8 +315,8 @@ client.setInterval(function(){
 		if(m){
 			m.delete().catch(O_o=>{});
 		}
-	}, 10000)	
-});
+	}
+}, 10000);
 
 //END OF MINECRAFT SERVER CHECK
 
