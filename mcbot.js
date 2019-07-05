@@ -302,23 +302,22 @@ This message will self destruct in 10 seconds
 	client.setTimeout(function(){
 			h.delete().catch(O_o=>{});
 		},10000);
-	}
-//Bot reset function
-function resetBot(){
+	}	
+});
+
+// Reset the bot periodically if the checking routine stopped.
+// Either abruptly by an error or by server going offline, API downtime, and the stop command.
+
+client.setInterval(function(){
 	if(!isChecking){
 		client.user.setStatus('idle');
 		client.user.setActivity("Type -help", { type: 'PLAYING' })
 		if(m){
 			m.delete().catch(O_o=>{});
 		}
-	}
-}
-
-// Reset the bot periodically if the checking routine stopped.
-// Either abruptly by an error or by server going offline, API downtime, and the stop command.
-client.setInterval(resetBot(), 10000)	
+	}, 10000)	
 });
-	
+
 //END OF MINECRAFT SERVER CHECK
 
 client.login(process.env.token); // Discord bot client auth.
