@@ -305,16 +305,18 @@ This message will self destruct in 10 seconds
 	}	
 });
 
-// Reset the bot periodically if the checking routine stopped.
-// Either abruptly by an error or by server going offline, API downtime, and the stop command.
-
-if(!isChecking){
-	timeout = setTimeout(function(){
+//Bot reset function
+function resetBot(){
+	if(!isChecking){
 		client.user.setStatus('idle');
 		client.user.setActivity("Type -help", { type: 'PLAYING' })
-	}, 5000);
+	}
 }
 
+// Reset the bot periodically if the checking routine stopped.
+// Either abruptly by an error or by server going offline, API downtime, and the stop command.
+client.setInterval(resetBot(), 5000)
+	
 //END OF MINECRAFT SERVER CHECK
 
 client.login(process.env.token); // Discord bot client auth.
