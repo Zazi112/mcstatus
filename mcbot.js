@@ -119,12 +119,12 @@ client.on("message", async message => {
 								// Edit the confirmation message
 								m.edit(
 								`
-								=======================
+								===============
 								 Server is **online**! 
 								 Running: ` + version +
 								`
 								 But it seems empty :(
-								=======================`
+								===============`
 								)
 							}
 					} else {
