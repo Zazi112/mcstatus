@@ -311,7 +311,7 @@ function resetBot(){
 		client.user.setStatus('idle');
 		client.user.setActivity("Type -help", { type: 'PLAYING' })
 		if(m){
-			m.delete().catch(O_o=>{}
+			m.delete().catch(O_o=>{});
 		}
 	}
 }
