@@ -233,7 +233,7 @@ client.on("message", async message => {
 				clearInterval(interval);
 				// Reset the bot
 				isChecking = false;
-				cliet.setStatus('idle');
+				client.user.setStatus('idle');
 				client.user.setActivity("Type -help", { type: 'PLAYING' })
 				// Edit the message
 				s.edit("Check stopped");
