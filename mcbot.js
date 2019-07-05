@@ -99,7 +99,7 @@ client.on("message", async message => {
 							client.user.setStatus('online')
 							//.then(console.log)
 							.catch(console.error);
-							version = body.version;
+							version = body.version
 							//console.log("Number of player: " + ((body.players.list).counters.length));
 							//console.log("Server online");
 						}
