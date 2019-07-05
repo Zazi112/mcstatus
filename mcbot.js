@@ -309,7 +309,7 @@ This message will self destruct in 10 seconds
 
 if(!isChecking){
 	timeout = setTimeout(function(){
-		cliet.setStatus('idle');
+		client.user.setStatus('idle');
 		client.user.setActivity("Type -help", { type: 'PLAYING' })
 	}, 5000);
 }
