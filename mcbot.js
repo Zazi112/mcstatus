@@ -25,6 +25,7 @@ var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 var status;
 var version;
 var isChecking = false;
+var isStarting = false;
 var interval;
 var interval2;
 
@@ -247,6 +248,7 @@ client.on("message", async message => {
 	if(command === "serverstart"){
 		message.delete().catch(O_o=>{});
 		const st = await message.channel.send("Checking VPS status..");
+		isStarting = true;
 		interval2 = setInterval(function(){
 			nodeClient.getServerStatus("cbe44c0f").then((status) => {
 				// console.log(status);
@@ -256,21 +258,28 @@ client.on("message", async message => {
 						client.user.setActivity("Starting server...", { type: 'PLAYING' })
 						// Edit the message
 						st.edit("Starting VPS server...");
+						Client.startServer("ServerID").then((response) => {
+						   // response will be "Server started successfully"
+						}).catch((error) => {
+							console.log(error);
+						});
 					},2000);
 				} else if(status === 'starting'){
 					setTimeout(function(){
-						st.edit("Server status: starting")
+						st.edit("Starting VPS server...")
 					},2000);
 				} else if(status === 'on'){
 					setTimeout(function(){
 						st.edit("Server status: online");
-					clearInterval(interval2);
+						clearInterval(interval2);
+						isStarting = false;
 					},2000);				
 				}
 			}).catch((error) => {
 				console.log(error);
 				st.edit('Error checking VPS status. Aborting');
 				clearInterval(interval2);
+				isStarting = false;
 				setTimeout(function(){
 					st.delete().catch(O_o=>{});
 				},5000);
@@ -339,7 +348,7 @@ This message will self destruct in 10 seconds
 // Either abruptly by an error or by server going offline, API downtime, and the stop command.
 
 client.setInterval(function(){
-	if(!isChecking){
+	if(!isChecking && !isStarting){
 		client.user.setStatus('idle');
 		client.user.setActivity("b!help", { type: 'LISTENING' })
 	}
