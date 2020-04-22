@@ -305,7 +305,7 @@ client.on("message", async message => {
 		}
 		channel.send(help);
 	}
-}
+});
 
 
 // Reset the bot periodically if the checking routine stopped.
