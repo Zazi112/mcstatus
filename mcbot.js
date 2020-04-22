@@ -13,10 +13,14 @@
 
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const node = require('nodeactyl');
+const nodeClient = node.Client;
 var request = require('request');
 var mcIP = process.env.mcip; // Read var "mcip" from Heroku ENV
 var mcPort = process.env.mcport; // Read var "mcport" from Heroku ENV
 var prefix = process.env.prefix; // Read var "prefix" from Heroku ENV
+var na_HOST = process.env.host; 
+var na_KEY = process.env.key;
 var url = 'http://mcapi.us/server/query?ip=' + mcIP + '&port=' + mcPort;
 var status;
 var version;
@@ -238,6 +242,18 @@ client.on("message", async message => {
 		},5000);
 	}
 
+// start server
+	if(command === "serverstart"){
+		message.delete().catch(O_o=>{});
+		// Send a confirmation message
+		const s = await message.channel.send("Checking VPS status");
+		nodeClient.getServerStatus("cbe44c0f").then((status) => {
+			console.log(status);
+		}).catch((error) => {
+			console.log(error);
+		});
+	}
+
 // help command: show help message
 	
 	if(command === "help") {
@@ -309,3 +325,6 @@ client.setInterval(function(){
 //END OF MINECRAFT SERVER CHECK
 
 client.login(process.env.token); // Discord bot client auth.
+nodeClient.login(na_HOST, na_KEY, (logged_in, err) => { // Pterodactyl API client auth.
+    console.log(logged_in);
+	});
