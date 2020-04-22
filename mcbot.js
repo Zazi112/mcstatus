@@ -246,9 +246,10 @@ client.on("message", async message => {
 	if(command === "serverstart"){
 		message.delete().catch(O_o=>{});
 		// Send a confirmation message
-		const s = await message.channel.send("Checking VPS status");
+		const st = await message.channel.send("Checking VPS status");
 		nodeClient.getServerStatus("cbe44c0f").then((status) => {
 			console.log(status);
+			st.edit('Server status: ' + status);
 		}).catch((error) => {
 			console.log(error);
 		});
