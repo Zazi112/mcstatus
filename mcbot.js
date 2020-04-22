@@ -249,7 +249,7 @@ client.on("message", async message => {
 		const st = await message.channel.send("Checking VPS status");
 		nodeClient.getServerStatus("cbe44c0f").then((status) => {
 			console.log(status);
-			st.edit('Server status: ' + status);
+			st.edit('VPS status: ' + status);
 		}).catch((error) => {
 			console.log(error);
 		});
