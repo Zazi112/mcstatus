@@ -26,7 +26,7 @@ var interval;
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setStatus('idle');
-  client.user.setActivity("Bot is loading", { type: 'PLAYING' })
+  client.user.setActivity("bot is loading", { type: 'CUSTOM_STATUS' })
 });
 
 // START OF MINECRAFT SERVER CHECK
