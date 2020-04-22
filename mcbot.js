@@ -170,7 +170,6 @@ client.on("message", async message => {
 							version = body.version
 							//console.log("Number of player: " + ((body.players.list).counters.length));
 							//console.log("Server online");
-						}
 							// Read the amount of player
 							if(body.players.now) {
 								// There are player(s) in the server
