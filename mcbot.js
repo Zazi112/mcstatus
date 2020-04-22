@@ -289,14 +289,6 @@ client.on("message", async message => {
 								for (i = 0; i < length; i++) {
 									playerList += "**-**" + players[i] + "\n";
 								}
-							const noPlayer = {
-								  "title": "**Online Players**",
-								  "description": "No player currently online :thinking: ",
-								  "color": 7502554,
-								  "footer": {
-									"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-								  }
-								}
 							const onlinePlayer = {
 								  "title": "**Online Players**",
 								  "description": (playerList),
@@ -314,6 +306,14 @@ client.on("message", async message => {
 								p.edit({ embed: onlinePlayer });
 							}
 						} else {
+							const noPlayer = {
+								  "title": "**Online Players**",
+								  "description": "No player currently online :thinking: ",
+								  "color": 7502554,
+								  "footer": {
+									"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+								  }
+								}
 							// There's no data, don't parse the list
 							// Edit confirmation message
 							p.edit({ embed: noPlayer });
