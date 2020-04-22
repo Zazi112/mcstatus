@@ -279,6 +279,7 @@ client.on("message", async message => {
 					st.delete().catch(O_o=>{})'
 				},5000);
 			});
+			}
 		},5000);
 	}
 
