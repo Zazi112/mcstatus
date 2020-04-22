@@ -246,9 +246,8 @@ client.on("message", async message => {
 // start server
 	if(command === "serverstart"){
 		message.delete().catch(O_o=>{});
-		// Send a confirmation message
 		const st = await message.channel.send("Checking VPS status..");
-		interval2 = setInterval(function(){
+		interval2 = setInterval(function(){}
 			nodeClient.getServerStatus("cbe44c0f").then((status) => {
 			// console.log(status);
 			if(status === 'off'){
@@ -256,21 +255,17 @@ client.on("message", async message => {
 				setTimeout(function(){
 					client.user.setActivity("Starting server...", { type: 'PLAYING' })
 					// Edit the message
-					st.edit("Starting VPS server");
+					st.edit("Starting VPS server...");
 				},2000);
-			} else {
-				if(status === 'starting'){
-					setTimeout(function(){
-						st.edit("Server status: starting")
-					},2000);
-				} else {
-					if(status === 'on'){
-						setTimeout(function(){
-							st.edit("Server status: online");
-						clearInterval(interval2);
-						},2000);
-					}
-				}	
+			} else if(status === 'starting'){
+				setTimeout(function(){
+					st.edit("Server status: starting")
+				},2000);
+			} else if(status === 'on'){
+				setTimeout(function(){
+					st.edit("Server status: online");
+				clearInterval(interval2);
+				},2000);				
 			}).catch((error) => {
 				console.log(error);
 				st.edit('Error checking VPS status. Aborting');
@@ -279,10 +274,8 @@ client.on("message", async message => {
 					st.delete().catch(O_o=>{})'
 				},5000);
 			});
-			}
 		},5000);
 	}
-
 // help command: show help message
 	
 	if(command === "help") {
