@@ -50,14 +50,28 @@ const statusOnline = {
         "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
       }
     }
-conts statusOffline = {
+const statusOffline = {
       "description": "Server is: **offline** :x: \n\nStart the server by using `start` command",
       "color": 7502554,
       "footer": {
         "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
       }
     }
-
+const statusError = {
+      "description": ":x:  **There is an error when connecting to the API** :x: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+    }
+const isRunning = {
+      "description": ":x:  **The check is already running!** :x: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+    }
+	
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setStatus('idle');
@@ -151,15 +165,15 @@ client.on("message", async message => {
 						.catch(console.error);
 						isChecking = false;
 						clearInterval(interval);
-						m.edit(`Server is **offline** / there is an API error or lag`);
-						client.user.setActivity("Server offline / API error :(", { type: 'PLAYING' })
+						m.edit({ embed: statusError });
+						client.user.setActivity("API error!", { type: 'PLAYING' })
 					}
 				});
 			},5000);
 		} else {
 			// Routine is already running
 			// Send error message
-			m.edit("**Error:** The check is already running");
+			m.edit({ embed: isRunning });
 		}
 	}
 
