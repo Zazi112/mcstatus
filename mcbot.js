@@ -257,10 +257,11 @@ client.on("message", async message => {
 					client.user.setActivity("Starting server...", { type: 'PLAYING' })
 					st.edit("Starting VPS server...");
 					setTimeout(function(){
-						new nodeClient.startServer("cbe44c0f").then((response) => {
+						nodeClient.startServer("cbe44c0f").then((response) => {
+							console.log(response);
 						// response will be "Server started successfully"
 						}).catch((error) => {
-							console.log(error);
+							console.log(error.message);
 							isStarting = false;
 							clearInterval(interval2);
 						});
