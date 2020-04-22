@@ -269,6 +269,8 @@ client.on("message", async message => {
 				} else if(status === 'starting'){
 					setTimeout(function(){
 						st.edit("Starting VPS server...")
+						isStarting = true;
+						client.user.setActivity("Starting server...", { type: 'PLAYING' })
 					},2000);
 				} else if(status === 'on'){
 					setTimeout(function(){
@@ -293,57 +295,15 @@ client.on("message", async message => {
 	if(command === "help") {
 		message.delete().catch(O_o={});
 		// Help message
-		const h = await message.channel.send(`==========================================
-
-:space_invader:                                  **[mcBot: alpha] **                                    :space_invader: 
-                                             by: *rendrop*
-
-==========================================
-
-                                     :notebook_with_decorative_cover:  **How to use**  :notebook_with_decorative_cover: 
-
-==========================================
-
-                  Use the prefix (" b! ") before the command
-
-==========================================
-
-                                  :white_check_mark: **Command List** :white_check_mark: 
-
-==========================================
-
-    **Help:** Show this help message
-
-    **Status:** Start the Minecraft server check.
-
-    **Player:** Show the list of online players 
-           (*Can only be done if the 
-                        server check is running 
-                                  and the server is online*)
-
-    **Stop:** Stop the Minecraft server check and reset the bot.
-
-
-==========================================
-
-                                      :notepad_spiral: **Notes:** :notepad_spiral: 
-
-==========================================
-
-Sometimes it takes 2-5 minutes for the API to update.
-That means sometimes the server check will report 
-that the server is offline/online when it is not.
-This however is a problem in McAPI system, not the bot. :worried:
-
-==========================================
-
-This message will self destruct in 10 seconds
-
-==========================================`);
-	client.setTimeout(function(){
-			h.delete().catch(O_o=>{});
-		},10000);
-	}	
+		const help = {
+		  "title": "> **SCTV OKE** ",
+		  "description": ":space_invader: `Official Discord Bot (Alpha Ver.)` :space_invader:\n\n\n>  :notebook_with_decorative_cover: **USAGE**  :notebook_with_decorative_cover:\n\nUse the prefix `b!` before command\n\n\n> :white_check_mark: **COMMANDS** :white_check_mark: \n\n` ` **help**: show this message\n` ` **status**: start the server status check\n` ` **player**: show the list of online player (can only be used if the server is online)\n` ` **stop**: stop the server status\n` ` **start**: start the VPS server (still buggy sometimes)\n\n\n\n> :notepad_spiral: **NOTES** :notepad_spiral:\n\nSometimes it takes 2-5 minutes for the API to update.\nThat means sometimes the server check will report \nthat the server is offline/online when it is not.\nThis however is a problem in McAPI system, not the bot. :worried:",
+		  "color": 7502554,
+		  "footer": {
+			"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+		  }
+		}
+		channel.send(help);
 });
 
 // Reset the bot periodically if the checking routine stopped.
