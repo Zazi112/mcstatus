@@ -14,7 +14,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const node = require('nodeactyl');
-const nodeClient = node.Client;
+const nodeClient = new node.Client;
 var request = require('request');
 var mcIP = process.env.mcip; // Read var "mcip" from Heroku ENV
 var mcPort = process.env.mcport; // Read var "mcport" from Heroku ENV
