@@ -29,6 +29,35 @@ var isStarting = false;
 var interval;
 var interval2;
 
+
+// EMBEDS
+
+// Server Check
+
+// Status
+
+const status1 = {
+      "title": ":rocket:  Checking server status :rocket: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+    }
+const statusOnline = {
+      "description": ("Server is: **online** :white_check_mark: \n\nRunning "**+ version +**"\n\nWith **"+ body.players.now +"** player(s) currently playing."),
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+    }
+conts statusOffline = {
+      "description": "Server is: **offline** :x: \n\nStart the server by using `start` command",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+    }
+
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setStatus('idle');
@@ -85,7 +114,7 @@ client.on("message", async message => {
 							.catch(console.error);
 							// Server is offline
 							// Edit confirmation message
-							m.edit(`Server is offline :(`);
+							m.edit({ embed: statusOffline });
 							// Edit bot status
 							client.user.setActivity("Server offline.", { type: 'PLAYING' });
 							// Stop the routine
@@ -107,16 +136,14 @@ client.on("message", async message => {
 								status = ' ' + body.players.now + '  of  ' + body.players.max;
 								client.user.setActivity(status + " | " + version);
 								// Edit the confirmation message to show the amount of online player
-								m.edit("========================\n                  Server is **online**!\n                  Running: **" + version + "**\n\n  With **" + body.players.now + "** player(s) currently online.\n========================")
+								m.edit({ embed: statusOnline })
 							} else if(body.players.now == 0){
 								// There are no players in the server
 								// Set bot status
 								status = ' 0  of  ' + body.players.max;
 								client.user.setActivity(status + " | " + version);
 								// Edit the confirmation message
-								m.edit(
-								`===============\n     Server is **online**!\n     Running: **` + version +`**\n But it seems empty :(\n===============`
-								)
+								m.edit({ embed: statusOnline });
 							}
 					} else {
 						client.user.setStatus('dnd')
@@ -245,7 +272,7 @@ client.on("message", async message => {
 	}
 
 // start server
-	if(command === "serverstart"){
+	if(command === "start"){
 		message.delete().catch(O_o=>{});
 		const st = await message.channel.send("Checking VPS status..");
 		isStarting = true;
