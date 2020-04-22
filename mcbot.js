@@ -363,4 +363,4 @@ nodeClient.login(na_HOST, na_KEY, (logged_in, err) => { // Pterodactyl API clien
     console.log(logged_in);
 	}).catch((error) => {
 		console.log(error.message);
-	}
+	})
