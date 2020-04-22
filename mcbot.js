@@ -61,7 +61,7 @@ client.on("message", async message => {
 			isChecking = true;
 			// console.log("Update called");
 			// Set bot status
-			client.user.setActivity("Checking server status...", { type: 'PLAYING' });
+			client.user.setActivity("server status...", { type: 'STREAMING' });
 			// Routine, check server status every 5 seconds
 			interval = setInterval(function(){
 				request(url, function(err, response, body) {
@@ -190,7 +190,7 @@ client.on("message", async message => {
 						} else {
 							// There's no data, don't parse the list
 							// Edit confirmation message
-							p.edit("There are no players online :(");
+							p.edit("There are no players online :o");
 						}
 					} else {
 						// This is a rare error message.
@@ -225,7 +225,7 @@ client.on("message", async message => {
 				// Reset the bot
 				isChecking = false;
 				client.user.setStatus('idle');
-				client.user.setActivity("Type b!help", { type: 'STATUS' })
+				client.user.setActivity("b!help", { type: 'LISTENING' })
 				// Edit the message
 				s.edit("Check stopped");
 			},2000);
@@ -302,7 +302,7 @@ This message will self destruct in 10 seconds
 client.setInterval(function(){
 	if(!isChecking){
 		client.user.setStatus('idle');
-		client.user.setActivity("Type b!help", { type: 'LISTENING' })
+		client.user.setActivity("b!help", { type: 'LISTENING' })
 	}
 }, 10000);
 
