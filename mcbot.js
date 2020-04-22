@@ -1,23 +1,14 @@
-//////////////////////////////////////////////
-//                                          //
-//			Minecraft Server Checker		//
-//				  Discord Bot				//
-//			  (github.com/rendrop)			//
-//                                          //
-//              Private Release             //
-//                                          //
-//			copyright: rendrop @2019        //
-//                                          //
-//////////////////////////////////////////////
-//                                          //
-//					Using:					//
-//                                          //
-//				 McAPI.us API				//
-//				  discord.js				//
-//				   request					//
-//                                          //
-//											//
-//////////////////////////////////////////////
+//////////////////////////////////////////
+//					//
+//	Minecraft Server Checker	//
+//           Discord Bot		//
+//	(github.com/rendrop)		//
+//                                      //
+//	  Private Release		//
+//                                      //
+//	copyright: rendrop @2019        //
+//      				//
+//////////////////////////////////////////
 
 
 const Discord = require("discord.js");
@@ -70,7 +61,7 @@ client.on("message", async message => {
 			isChecking = true;
 			// console.log("Update called");
 			// Set bot status
-			client.user.setActivity("Checking server status...", { type: 'PLAYING' });
+			client.user.setActivity("Checking server status...", { type: 'CUSTOM_STATUS' });
 			// Routine, check server status every 5 seconds
 			interval = setInterval(function(){
 				request(url, function(err, response, body) {
@@ -82,7 +73,7 @@ client.on("message", async message => {
 						body = JSON.parse(body);
 						// console.log("Online: " + body.online);	
 					if(body.online) {
-						if((body.motd=="Â§4This server is offline.\nÂ§7powered by aternos.org")||(body.players.now>=body.players.max)){
+						if((body.motd=="Ã‚Â§4This server is offline.\nÃ‚Â§7powered by aternos.org")||(body.players.now>=body.players.max)){
 							client.user.setStatus('dnd')
 							//.then(console.log)
 							.catch(console.error);
@@ -90,7 +81,7 @@ client.on("message", async message => {
 							// Edit confirmation message
 							m.edit(`Server is offline :(`);
 							// Edit bot status
-							client.user.setActivity("Server offline.", { type: 'PLAYING' });
+							client.user.setActivity("Server offline.", { type: 'CUSTOM_STATUS' });
 							// Stop the routine
 							isChecking = false;
 							clearInterval(interval);
@@ -128,7 +119,7 @@ client.on("message", async message => {
 						isChecking = false;
 						clearInterval(interval);
 						m.edit(`Server is **offline** / there is an API error or lag`);
-						client.user.setActivity("Server offline / API error :(", { type: 'PLAYING' })
+						client.user.setActivity("Server offline / API error :(", { type: 'CUSTOM_STATUS' })
 					}
 				});
 			},5000);
@@ -234,7 +225,7 @@ client.on("message", async message => {
 				// Reset the bot
 				isChecking = false;
 				client.user.setStatus('idle');
-				client.user.setActivity("Type -help", { type: 'PLAYING' })
+				client.user.setActivity("Type b!help", { type: 'STATUS' })
 				// Edit the message
 				s.edit("Check stopped");
 			},2000);
@@ -263,7 +254,7 @@ client.on("message", async message => {
 
 ==========================================
 
-                  Use the prefix (" - ") before the command
+                  Use the prefix (" b! ") before the command
 
 ==========================================
 
@@ -271,16 +262,16 @@ client.on("message", async message => {
 
 ==========================================
 
-    **• Help:** Show this help message
+    **Help:** Show this help message
 
-    **• Status:** Start the Minecraft server check.
+    **Status:** Start the Minecraft server check.
 
-    **• Player:** Show the list of online players 
+    **Player:** Show the list of online players 
            (*Can only be done if the 
                         server check is running 
                                   and the server is online*)
 
-    **• Stop:** Stop the Minecraft server check and reset the bot.
+    **Stop:** Stop the Minecraft server check and reset the bot.
 
 
 ==========================================
@@ -311,7 +302,7 @@ This message will self destruct in 10 seconds
 client.setInterval(function(){
 	if(!isChecking){
 		client.user.setStatus('idle');
-		client.user.setActivity("Type -help", { type: 'PLAYING' })
+		client.user.setActivity("Type b!help", { type: 'CUSTOM_STATUS' })
 	}
 }, 10000);
 
