@@ -278,7 +278,7 @@ client.on("message", async message => {
 					},2000);				
 				}
 			}).catch((error) => {
-				console.log(error);
+				console.log(error.message);
 				st.edit('Error checking VPS status. Aborting');
 				clearInterval(interval2);
 				isStarting = false;
