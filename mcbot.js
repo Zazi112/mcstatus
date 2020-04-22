@@ -152,7 +152,7 @@ client.on("message", async message => {
 			isChecking = true;
 			// console.log("Update called");
 			// Set bot status
-			client.user.setActivity("server status...", { type: 'STREAMING' });
+			client.user.setActivity("checking server status...", { type: 'STREAMING' });
 			// Routine, check server status every 5 seconds
 			interval = setInterval(function(){
 				request(url, function(err, response, body) {
@@ -184,13 +184,6 @@ client.on("message", async message => {
 							version = body.version
 							//console.log("Number of player: " + ((body.players.list).counters.length));
 							//console.log("Server online");
-							const statusOnline = {
-							  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "** :desktop: \n\nWith **" + body.players.now + "** player(s) currently playing. :man_raising_hand: "),
-							  "color": 7502554,
-							  "footer": {
-								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-							  }
-							}
 						}
 							// Read the amount of player
 							if(body.players.now) {
@@ -198,9 +191,23 @@ client.on("message", async message => {
 								// Set bot status
 								status = ' ' + body.players.now + '  of  ' + body.players.max;
 								client.user.setActivity(status + " | " + version);
+								const statusOnline = {
+									  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "** :desktop: \n\nWith **" + body.players.now + "** player(s) currently playing. :man_raising_hand: "),
+									  "color": 7502554,
+									  "footer": {
+										"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+									  }
+									}
 								// Edit the confirmation message to show the amount of online player
 								m.edit({ embed: statusOnline })
 							} else if(body.players.now == 0){
+								const statusOnline = {
+								  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "** :desktop: \n\nWith **" + body.players.now + "** player(s) currently playing. :man_raising_hand: "),
+								  "color": 7502554,
+								  "footer": {
+									"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+								  }
+								}
 								// There are no players in the server
 								// Set bot status
 								status = ' 0  of  ' + body.players.max;
