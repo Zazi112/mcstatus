@@ -92,7 +92,7 @@ client.on("message", async message => {
 	if(command === "status") {
 		message.delete().catch(O_o=>{});
 		// Send confirmation message
-		const m = await message.channel.send("Checking server status...");
+		const m = await message.channel.send({ embed: status1 });
 		// Check if the routine is already running or not
 		if(!isChecking){
 			// Routine is running
@@ -113,7 +113,7 @@ client.on("message", async message => {
 						// START OF MESSAGE EMBEDS
 						
 						const statusOnline = {
-							  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "**\n\nWith **" + body.players.now + "** player(s) currently playing."),
+							  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "** :desktop: \n\nWith **" + body.players.now + "** player(s) currently playing. :man_raising_hand: "),
 							  "color": 7502554,
 							  "footer": {
 								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
