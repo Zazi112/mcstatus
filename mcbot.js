@@ -272,7 +272,7 @@ client.on("message", async message => {
 				st.edit('Error checking VPS status. Aborting');
 				clearInterval(interval2);
 				setTimeout(function(){
-					st.delete().catch(O_o=>{})'
+					st.delete().catch(O_o=>{});
 				},5000);
 			});
 		},5000);
