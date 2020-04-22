@@ -152,7 +152,7 @@ client.on("message", async message => {
 			isChecking = true;
 			// console.log("Update called");
 			// Set bot status
-			client.user.setActivity("checking server status...", { type: 'STREAMING' });
+			client.user.setActivity("checking server...", { type: 'STREAMING' });
 			// Routine, check server status every 5 seconds
 			interval = setInterval(function(){
 				request(url, function(err, response, body) {
@@ -164,20 +164,6 @@ client.on("message", async message => {
 						body = JSON.parse(body);			
 						// console.log("Online: " + body.online);	
 					if(body.online) {
-						if((body.motd=="Â§4This server is offline.\nÂ§7powered by aternos.org")||(body.players.now>=body.players.max)){
-							client.user.setStatus('dnd')
-							//.then(console.log)
-							.catch(console.error);
-							// Server is offline
-							// Edit confirmation message
-							m.edit({ embed: statusOffline });
-							// Edit bot status
-							client.user.setActivity("Server offline.", { type: 'PLAYING' });
-							// Stop the routine
-							isChecking = false;
-							clearInterval(interval);
-							// console.log("Server offline");
-						}else{
 							client.user.setStatus('online')
 							//.then(console.log)
 							.catch(console.error);
@@ -215,13 +201,13 @@ client.on("message", async message => {
 								// Edit the confirmation message
 								m.edit({ embed: statusOnline });
 							}
-					} else {
+					} else if(!body.online) {
 						client.user.setStatus('dnd')
 						//.then(console.log)
 						.catch(console.error);
 						isChecking = false;
 						clearInterval(interval);
-						m.edit({ embed: statusError });
+						m.edit({ embed: statusOffline });
 						client.user.setActivity("API error!", { type: 'PLAYING' })
 					}
 				});
