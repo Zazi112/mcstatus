@@ -286,7 +286,7 @@ client.on("message", async message => {
 					st.delete().catch(O_o=>{});
 				},5000);
 			});
-		},2000);
+		},10000);
 	}
 // help command: show help message
 	
@@ -360,5 +360,5 @@ client.setInterval(function(){
 
 client.login(process.env.token); // Discord bot client auth.
 nodeClient.login(na_HOST, na_KEY, (logged_in, err) => { // Pterodactyl API client auth.
-    console.log(logged_in.message);
+    console.log(logged_in);
 	});
