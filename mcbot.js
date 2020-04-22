@@ -26,7 +26,7 @@ var interval;
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setStatus('idle');
-  client.user.setActivity("bot is loading", { type: 'CUSTOM_STATUS' })
+  client.user.setActivity("bot is loading", { type: 'STREAMING' })
 });
 
 // START OF MINECRAFT SERVER CHECK
@@ -61,7 +61,7 @@ client.on("message", async message => {
 			isChecking = true;
 			// console.log("Update called");
 			// Set bot status
-			client.user.setActivity("Checking server status...", { type: 'CUSTOM_STATUS' });
+			client.user.setActivity("Checking server status...", { type: 'PLAYING' });
 			// Routine, check server status every 5 seconds
 			interval = setInterval(function(){
 				request(url, function(err, response, body) {
@@ -81,7 +81,7 @@ client.on("message", async message => {
 							// Edit confirmation message
 							m.edit(`Server is offline :(`);
 							// Edit bot status
-							client.user.setActivity("Server offline.", { type: 'CUSTOM_STATUS' });
+							client.user.setActivity("Server offline.", { type: 'PLAYING' });
 							// Stop the routine
 							isChecking = false;
 							clearInterval(interval);
@@ -119,7 +119,7 @@ client.on("message", async message => {
 						isChecking = false;
 						clearInterval(interval);
 						m.edit(`Server is **offline** / there is an API error or lag`);
-						client.user.setActivity("Server offline / API error :(", { type: 'CUSTOM_STATUS' })
+						client.user.setActivity("Server offline / API error :(", { type: 'PLAYING' })
 					}
 				});
 			},5000);
@@ -302,7 +302,7 @@ This message will self destruct in 10 seconds
 client.setInterval(function(){
 	if(!isChecking){
 		client.user.setStatus('idle');
-		client.user.setActivity("Type b!help", { type: 'CUSTOM_STATUS' })
+		client.user.setActivity("Type b!help", { type: 'LISTENING' })
 	}
 }, 10000);
 
