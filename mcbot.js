@@ -36,41 +36,7 @@ var interval2;
 
 // Status
 
-const status1 = {
-      "title": ":rocket:  Checking server status :rocket: ",
-      "color": 7502554,
-      "footer": {
-        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-      }
-    }
-const statusOnline = {
-      "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "**\n\nWith **" + body.players.now + "** player(s) currently playing."),
-      "color": 7502554,
-      "footer": {
-        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-      }
-    }
-const statusOffline = {
-      "description": "Server is: **offline** :x: \n\nStart the server by using `start` command",
-      "color": 7502554,
-      "footer": {
-        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-      }
-    }
-const statusError = {
-      "description": ":x:  **There is an error when connecting to the API** :x: ",
-      "color": 7502554,
-      "footer": {
-        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-      }
-    }
-const isRunning = {
-      "description": ":x:  **The check is already running!** :x: ",
-      "color": 7502554,
-      "footer": {
-        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-      }
-    }
+
 	
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -120,6 +86,41 @@ client.on("message", async message => {
 					  //return message.reply('Error getting Minecraft server status...');
 					}
 						body = JSON.parse(body);
+						const status1 = {
+							  "title": ":rocket:  Checking server status :rocket: ",
+							  "color": 7502554,
+							  "footer": {
+								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+							  }
+							}
+						const statusOnline = {
+							  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "**\n\nWith **" + body.players.now + "** player(s) currently playing."),
+							  "color": 7502554,
+							  "footer": {
+								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+							  }
+							}
+						const statusOffline = {
+							  "description": "Server is: **offline** :x: \n\nStart the server by using `start` command",
+							  "color": 7502554,
+							  "footer": {
+								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+							  }
+							}
+						const statusError = {
+							  "description": ":x:  **There is an error when connecting to the API** :x: ",
+							  "color": 7502554,
+							  "footer": {
+								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+							  }
+							}
+						const isRunning = {
+							  "description": ":x:  **The check is already running!** :x: ",
+							  "color": 7502554,
+							  "footer": {
+								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+							  }
+							}
 						// console.log("Online: " + body.online);	
 					if(body.online) {
 						if((body.motd=="Â§4This server is offline.\nÂ§7powered by aternos.org")||(body.players.now>=body.players.max)){
