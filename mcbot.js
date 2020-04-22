@@ -303,9 +303,9 @@ client.on("message", async message => {
 			"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
 		  }
 		}
-		channel.send(help);
+		const hm = await message.channel.send(help);
 	}
-});
+})
 
 
 // Reset the bot periodically if the checking routine stopped.
