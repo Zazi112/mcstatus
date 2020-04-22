@@ -249,23 +249,24 @@ client.on("message", async message => {
 		const st = await message.channel.send("Checking VPS status..");
 		interval2 = setInterval(function(){
 			nodeClient.getServerStatus("cbe44c0f").then((status) => {
-			// console.log(status);
-			if(status === 'off'){
-				st.edit('Server status: offline');
-				setTimeout(function(){
-					client.user.setActivity("Starting server...", { type: 'PLAYING' })
-					// Edit the message
-					st.edit("Starting VPS server...");
-				},2000);
-			} else if(status === 'starting'){
-				setTimeout(function(){
-					st.edit("Server status: starting")
-				},2000);
-			} else if(status === 'on'){
-				setTimeout(function(){
-					st.edit("Server status: online");
-				clearInterval(interval2);
-				},2000);				
+				// console.log(status);
+				if(status === 'off'){
+					st.edit('Server status: offline');
+					setTimeout(function(){
+						client.user.setActivity("Starting server...", { type: 'PLAYING' })
+						// Edit the message
+						st.edit("Starting VPS server...");
+					},2000);
+				} else if(status === 'starting'){
+					setTimeout(function(){
+						st.edit("Server status: starting")
+					},2000);
+				} else if(status === 'on'){
+					setTimeout(function(){
+						st.edit("Server status: online");
+					clearInterval(interval2);
+					},2000);				
+				}
 			}).catch((error) => {
 				console.log(error);
 				st.edit('Error checking VPS status. Aborting');
