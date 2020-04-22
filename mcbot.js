@@ -247,7 +247,7 @@ client.on("message", async message => {
 	if(command === "serverstart"){
 		message.delete().catch(O_o=>{});
 		const st = await message.channel.send("Checking VPS status..");
-		interval2 = setInterval(function(){}
+		interval2 = setInterval(function(){
 			nodeClient.getServerStatus("cbe44c0f").then((status) => {
 			// console.log(status);
 			if(status === 'off'){
