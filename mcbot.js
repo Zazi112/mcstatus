@@ -31,6 +31,7 @@ var interval2;
 
 
 // EMBEDS
+
 // Status
 const status1 = {
 							  "title": ":rocket:  Checking server status :rocket: ",
@@ -60,6 +61,58 @@ const isRunning = {
 		"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
 	  }
 	}
+const stopping = {
+      "description": ":clock3:  **Stopping** :clock3: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+}
+const stopped = {
+      "description": ":x:  **Check stopped** :x: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+    }
+const noCheck = {
+      "description": ":x:  **No check ongoing!** :x: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+    }
+
+// VPS
+const isOnline = {
+      "description": ":white_check_mark:  **Server is online** :white_check_mark: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+}
+const starting = {
+      "description": ":rocket:   **Starting server** :rocket: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+}
+const checking = {
+      "description": ":mag:   **Checking VPS server** :mag: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+}
+const isOffline = {
+      "description": " :x:  **Server is offline**  :x: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+}
+
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -108,20 +161,7 @@ client.on("message", async message => {
 					  .catch(console.error);
 					  //return message.reply('Error getting Minecraft server status...');
 					}
-						body = JSON.parse(body);
-						
-						// START OF MESSAGE EMBEDS
-						
-						const statusOnline = {
-							  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "** :desktop: \n\nWith **" + body.players.now + "** player(s) currently playing. :man_raising_hand: "),
-							  "color": 7502554,
-							  "footer": {
-								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-							  }
-							}
-							
-						// END OF MESSAGE EMBEDS
-						
+						body = JSON.parse(body);			
 						// console.log("Online: " + body.online);	
 					if(body.online) {
 						if((body.motd=="Â§4This server is offline.\nÂ§7powered by aternos.org")||(body.players.now>=body.players.max)){
@@ -144,6 +184,13 @@ client.on("message", async message => {
 							version = body.version
 							//console.log("Number of player: " + ((body.players.list).counters.length));
 							//console.log("Server online");
+							const statusOnline = {
+							  "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "** :desktop: \n\nWith **" + body.players.now + "** player(s) currently playing. :man_raising_hand: "),
+							  "color": 7502554,
+							  "footer": {
+								"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+							  }
+							}
 						}
 							// Read the amount of player
 							if(body.players.now) {
@@ -202,9 +249,16 @@ client.on("message", async message => {
 	if(command === "player" || command === "players") {
 		message.delete().catch(O_o=>{});
 		// Check if the routine is running
+		const playerChecking =     {
+				  "description": ":mag_right:  **Checking online players** :mag_right: ",
+				  "color": 7502554,
+				  "footer": {
+					"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+				  }
+				}
 		if(isChecking){
 			// Send confirmation message
-			const p = await message.channel.send("Checking online players...");
+			const p = await message.channel.send({ embed: playerChecking });
 			// const d = await message.channel.send("This feature is still on development.");
 			setTimeout(function(){
 				request(url, function(err, response, body) {
@@ -212,7 +266,7 @@ client.on("message", async message => {
 						console.log(err)
 						.catch(console.error);
 						// Reply an error message
-						return message.reply('Error getting Minecraft server status... (McAPI is down?)');
+						return message.reply({ embed: statusError });
 					}
 				// Get data from McAPI	
 				body = JSON.parse(body);
@@ -227,23 +281,39 @@ client.on("message", async message => {
 								var playerList = "\n\n"
 								for (i = 0; i < length; i++) {
 									playerList += "**-**" + players[i] + "\n";
-								} 
+								}
+							const noPlayer = {
+								  "title": "**Online Players**",
+								  "description": "No player currently online :thinking: ",
+								  "color": 7502554,
+								  "footer": {
+									"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+								  }
+								}
+							const onlinePlayer = {
+								  "title": "**Online Players**",
+								  "description": (playerList),
+								  "color": 7502554,
+								  "footer": {
+									"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+								  }
+								}
 							// console.log(playerList);
 							// console.log(players);
 							// console.log(length);
 							if(length > 0){
 								// Edit the message
 								// Show list of online players
-								p.edit(`**Player online:** ` + playerList);
+								p.edit({ embed: onlinePlayer });
 							}
 						} else {
 							// There's no data, don't parse the list
 							// Edit confirmation message
-							p.edit("There are no players online :o");
+							p.edit({ embed: noPlayer });
 						}
 					} else {
 						// This is a rare error message.
-						p.edit("Error getting player list. The server seems to be offline :(");
+						p.edit({ embed: statusError });
 					}
 				});
 			},2000);
@@ -252,7 +322,14 @@ client.on("message", async message => {
 			},20000);
 		} else {
 			// Routine is not running, send error message
-			const e = await message.channel.send("Please check the server status first!");
+			const plsCheck = {
+				  "description": ":x: **Please check server status first** :x:",
+				  "color": 7502554,
+				  "footer": {
+					"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+				  }
+				}
+			const e = await message.channel.send({ embed: plsCheck });
 			client.setTimeout(function(){
 				e.delete().catch(O_o=>{});
 			},5000);
@@ -265,7 +342,7 @@ client.on("message", async message => {
 		
 		message.delete().catch(O_o=>{});
 		// Send a confirmation message
-		const s = await message.channel.send("Stopping server check");
+		const s = await message.channel.send({ embed: stopping });
 		// Check if the routine is running
 		if(isChecking){
 			// If there routine is running, stop it in ~2 seconds
@@ -276,11 +353,11 @@ client.on("message", async message => {
 				client.user.setStatus('idle');
 				client.user.setActivity("b!help", { type: 'LISTENING' })
 				// Edit the message
-				s.edit("Check stopped");
+				s.edit({ embed: stopped });
 			},2000);
 		} else {
 			// Routine is not running, edit the message
-			s.edit("There is no check ongoing");
+			s.edit({ embed: noCheck });
 		}
 		client.setTimeout(function(){
 			s.delete().catch(O_o=>{});
@@ -290,16 +367,16 @@ client.on("message", async message => {
 // start server
 	if(command === "start"){
 		message.delete().catch(O_o=>{});
-		const st = await message.channel.send("Checking VPS status..");
+		const st = await message.channel.send({ embed: checking });
 		isStarting = true;
 		interval2 = setInterval(function(){
 			nodeClient.getServerStatus("cbe44c0f").then((status) => {
 				// console.log(status);
 				if(status === 'off'){
-					st.edit('Server status: offline');
+					st.edit({ embed: isOffline });
 					client.user.setActivity("Starting server...", { type: 'PLAYING' })
-					st.edit("Starting VPS server...");
 					setTimeout(function(){
+						st.edit({ embed: starting });
 						nodeClient.startServer("cbe44c0f").then((response) => {
 							console.log(response);
 						// response will be "Server started successfully"
@@ -311,13 +388,13 @@ client.on("message", async message => {
 					},2000);
 				} else if(status === 'starting'){
 					setTimeout(function(){
-						st.edit("Starting VPS server...")
+						st.edit({ embed: starting })
 						isStarting = true;
 						client.user.setActivity("Starting server...", { type: 'PLAYING' })
 					},2000);
 				} else if(status === 'on'){
 					setTimeout(function(){
-						st.edit("Server status: online");
+						st.edit({ embed: isOnline });
 						clearInterval(interval2);
 						isStarting = false;
 					},2000);				
@@ -331,7 +408,7 @@ client.on("message", async message => {
 					st.delete().catch(O_o=>{});
 				},5000);
 			});
-		},10000);
+		},7000);
 	}
 // help command: show help message
 	
