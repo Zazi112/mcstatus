@@ -258,10 +258,12 @@ client.on("message", async message => {
 						client.user.setActivity("Starting server...", { type: 'PLAYING' })
 						// Edit the message
 						st.edit("Starting VPS server...");
-						Client.startServer("ServerID").then((response) => {
+						nodeClient.startServer("cbe44c0f").then((response) => {
 						   // response will be "Server started successfully"
 						}).catch((error) => {
 							console.log(error);
+							isStarting = false;
+							clearInterval(interval2);
 						});
 					},2000);
 				} else if(status === 'starting'){
@@ -284,7 +286,7 @@ client.on("message", async message => {
 					st.delete().catch(O_o=>{});
 				},5000);
 			});
-		},5000);
+		},2000);
 	}
 // help command: show help message
 	
