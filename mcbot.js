@@ -303,7 +303,7 @@ client.on("message", async message => {
 			"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
 		  }
 		}
-		const hm = await message.channel.send(help);
+		const hm = await message.channel.send({ embed: help });
 	}
 })
 
