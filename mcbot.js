@@ -254,12 +254,11 @@ client.on("message", async message => {
 				// console.log(status);
 				if(status === 'off'){
 					st.edit('Server status: offline');
+					client.user.setActivity("Starting server...", { type: 'PLAYING' })
+					st.edit("Starting VPS server...");
 					setTimeout(function(){
-						client.user.setActivity("Starting server...", { type: 'PLAYING' })
-						// Edit the message
-						st.edit("Starting VPS server...");
 						nodeClient.startServer("cbe44c0f").then((response) => {
-						   // response will be "Server started successfully"
+						// response will be "Server started successfully"
 						}).catch((error) => {
 							console.log(error);
 							isStarting = false;
