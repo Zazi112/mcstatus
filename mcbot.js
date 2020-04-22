@@ -44,7 +44,7 @@ const status1 = {
       }
     }
 const statusOnline = {
-      "description": ("Server is: **online** :white_check_mark: \n\nRunning "**+ version +**"\n\nWith **"+ body.players.now +"** player(s) currently playing."),
+      "description": ("Server is: **online** :white_check_mark: \n\nRunning **" + version + "**\n\nWith **" + body.players.now + "** player(s) currently playing."),
       "color": 7502554,
       "footer": {
         "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
