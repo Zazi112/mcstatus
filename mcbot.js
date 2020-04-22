@@ -361,4 +361,4 @@ client.setInterval(function(){
 client.login(process.env.token); // Discord bot client auth.
 nodeClient.login(na_HOST, na_KEY, (logged_in, err) => { // Pterodactyl API client auth.
     console.log(logged_in.message);
-	}
+	});
