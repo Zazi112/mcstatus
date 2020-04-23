@@ -450,6 +450,13 @@ client.on("message", async message => {
 			const connection = await message.member.voice.channel.join();
 			console.log("Playing Prambors");
 			const dispatcher = connection.play(fs.createReadStream('http://masima.rastream.com/masima-pramborsjakarta'), { type: 'audio/aapc' })
+			dispatcher.on('start', () => {
+			console.log('audio.mp3 is now playing!');
+			});
+			dispatcher.on('finish', () => {
+				console.log('audio.mp3 has finished playing!');
+			})
+			dispatcher.on('error', console.error);
 		}		
 	}
 })
