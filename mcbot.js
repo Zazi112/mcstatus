@@ -13,6 +13,7 @@
 
 const Discord = require("discord.js");
 const fs = require('fs');
+const ffmpeg = require('ffmpeg');
 const node = require('nodeactyl');
 var opusscript = require("opusscript");
 const client = new Discord.Client();
@@ -448,7 +449,7 @@ client.on("message", async message => {
 			console.log("Joined voice channel");
 			const connection = await message.member.voice.channel.join();
 			console.log("Playing Prambors");
-			const dispatcher = connection.play('http://masima.rastream.com/masima-pramborsjakarta')
+			const dispatcher = connection.playArbitraryInput('http://masima.rastream.com/masima-pramborsjakarta')
 			.catch(error =>{
 				console.log(error)
 			});
