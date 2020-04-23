@@ -480,6 +480,13 @@ client.setInterval(function(){
 
 //END OF BOT
 
+// DEBUG
+client.on('debug', console.log);
+
+channel.join().then(connection => {
+	connection.on('debug', console.log);
+});
+
 client.login(process.env.token); // Discord bot client auth.
 nodeClient.login(na_HOST, na_KEY, (logged_in, err) => { // Pterodactyl API client auth.
     console.log("Connected to Pterodactyl API");
