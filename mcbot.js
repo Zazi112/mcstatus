@@ -15,7 +15,25 @@ const Discord = require("discord.js");
 const http = require('http');
 const ffmpeg = require('ffmpeg');
 const node = require('nodeactyl');
+
 var opusscript = require("opusscript");
+// 48kHz sampling rate, 20ms frame duration, stereo audio (2 channels)
+var samplingRate = 48000;
+var frameDuration = 20;
+var channels = 2;
+
+// Optimize encoding for audio. Available applications are VOIP, AUDIO, and RESTRICTED_LOWDELAY
+var encoder = new opusscript(samplingRate, channels, opusscript.Application.AUDIO);
+
+var frameSize = samplingRate * frameDuration / 1000;
+
+// Get PCM data from somewhere and encode it into opus
+var pcmData = new Buffer(pcmSource);
+var encodedPacket = encoder.encode(pcmData, frameSize);
+
+// Decode the opus packet back into PCM
+var decodedPacket = encoder.decode(encodedPacket);
+
 var fs = require('fs');
 const client = new Discord.Client();
 const nodeClient = node.Client;
@@ -447,8 +465,9 @@ client.on("message", async message => {
 			const e = await message.channel.send("You are not in a voice channel!")
 		} else if(message.member.voice.channel) {
 			console.log("Joined voice channel");
-			message.member.voice.channel.join().then(connection => {
-			  require('http').get("http://radio.animenexus.mx:8000/animenexus", (res) => {
+			const connection = await message.member.voice.channel.join().then(connection => {
+			  require('http').get("http://masima.rastream.com/masima-pramborsjakarta", (res) => {
+					console.log(res);
 					connection.play(res).on('error', err => {
 					client.logger.error(err);
 					connection.play(res);
