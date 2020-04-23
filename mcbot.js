@@ -447,7 +447,9 @@ client.on("message", async message => {
 			const e = await message.channel.send("You are not in a voice channel!")
 		} else if(message.member.voice.channel) {
 			console.log("Joined voice channel");
-			const connection = await message.member.voice.channel.join();
+			const connection = await message.member.voice.channel.join()
+			.then(connection => resolve(connection))
+			.catch(err =>reject(err));
 			const stream = () => {
 					return request.get({
 					   uri: 'http://masima.rastream.com/masima-pramborsjakarta?',
@@ -457,7 +459,7 @@ client.on("message", async message => {
 			   }
 			console.log(stream);
 			console.log("Playing Prambors");
-			const dispatcher = connection.play(stream, { type: 'converted' })
+			const dispatcher = connection.play(fs.createReadStream(stream), { type: 'converted' })
 			dispatcher.on('start', () => {
 			console.log('audio.mp3 is now playing!');
 			});
