@@ -452,7 +452,7 @@ client.on("message", async message => {
 			const connection = await message.member.voice.channel.join();
 			console.log("Playing Prambors");
 			const stream = fs.createWriteStream("file.m3u8");
-			const request = http.get("hls+http://hls.rastream.com/masima-pramborsjakarta.web.hls/playlist.m3u8?listeningSessionID=5e54063fa0af4f01_5079305_wyn3gO0h_MTAzLjIxLjgxLjM6ODA!_000000dE2qB&downloadSessionID=0&awparams=companionads%3Atrue%3Btags%3Aradioactive%3Bstationid%3Amasima-pramborsjakarta&playerid=Prambors_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE1ODc2NDQxMTksImV4cCI6MTU4NzczMDUxOX0.a3XUDuK6naFDqNezlwAbz-6xDJK6oWf9AV2z5Zj_omM&lan=%5B%22en%22%5D&setLanguage=true", function(response) {
+			const request = http.get("http://hls.rastream.com/masima-pramborsjakarta.web.hls/playlist.m3u8?listeningSessionID=5e54063fa0af4f01_5079305_wyn3gO0h_MTAzLjIxLjgxLjM6ODA!_000000dE2qB&downloadSessionID=0&awparams=companionads%3Atrue%3Btags%3Aradioactive%3Bstationid%3Amasima-pramborsjakarta&playerid=Prambors_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE1ODc2NDQxMTksImV4cCI6MTU4NzczMDUxOX0.a3XUDuK6naFDqNezlwAbz-6xDJK6oWf9AV2z5Zj_omM&lan=%5B%22en%22%5D&setLanguage=true", function(response) {
 				response.pipe(stream);
 			});
 			const dispatcher = connection.play(fs.createReadStream('file.m3u8'));
