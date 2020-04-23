@@ -1,6 +1,6 @@
 {
   "name": "SCTV-OKE",
-  "version": "1.1.0",
+  "version": "1.6.0",
   "description": "SCTV OKE Official Bot",
   "engines": {
     "node": "12.16.2"
@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/lerokko/mcstatusbot#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.1.0",
     "bufferutil": "^4.0.1",
     "discord.js": "^12.2.0",
     "nodeactyl": "^2.0.2",
