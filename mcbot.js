@@ -27,13 +27,6 @@ var encoder = new opusscript(samplingRate, channels, opusscript.Application.AUDI
 
 var frameSize = samplingRate * frameDuration / 1000;
 
-// Get PCM data from somewhere and encode it into opus
-var pcmData = new Buffer(pcmSource);
-var encodedPacket = encoder.encode(pcmData, frameSize);
-
-// Decode the opus packet back into PCM
-var decodedPacket = encoder.decode(encodedPacket);
-
 var fs = require('fs');
 const client = new Discord.Client();
 const nodeClient = node.Client;
