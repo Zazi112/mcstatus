@@ -14,6 +14,7 @@
 const Discord = require("discord.js");
 const fs = require('fs');
 const node = require('nodeactyl');
+var opusscript = require("opusscript");
 const client = new Discord.Client();
 const nodeClient = node.Client;
 var request = require('request');
