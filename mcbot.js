@@ -13,20 +13,13 @@
 
 const Discord = require("discord.js");
 const http = require('http');
-var fs = require('fs');
 const ffmpeg = require('ffmpeg');
 const node = require('nodeactyl');
 var opusscript = require("opusscript");
-const { Readable } = require('stream');
+var fs = require('fs');
 const client = new Discord.Client();
 const nodeClient = node.Client;
-var util = require('util');
-var URL = require('url');
 var request = require('request');
-var XMLHttpRequest = global.XMLHttpRequest = require("xhr2");
-const EventEmitter = require('events');
-class HTMLVideoElement extends EventEmitter {}
-global.HTMLVideoElement = HTMLVideoElement;
 var mcIP = process.env.mcip; // Read var "mcip" from Heroku ENV
 var mcPort = process.env.mcport; // Read var "mcport" from Heroku ENV
 var prefix = process.env.prefix; // Read var "prefix" from Heroku ENV
@@ -39,256 +32,6 @@ var isChecking = false;
 var isStarting = false;
 var interval;
 var interval2;
-
-// HLS STREAMER
-
-var Hls = require('hls.js');
-
-const INITIAL_SIZE = 512000;
-
-class SourceBuffer extends EventEmitter {
-	constructor(mimetype) {
-		super();
-		this._mimetype = mimetype;
-		this._buffer = Buffer.alloc(INITIAL_SIZE,0,'binary');
-		return this;
-	}
-	addEventListener(eventName, callback) {
-		this.addListener(eventName, callback);
-		console.log('sb addEventListener '+eventName);
-		//if (eventName != 'error') this.emit(eventName);
-	}
-	appendBuffer(data) {
-		console.log(this._mimetype+' '+data.length+' '+typeof data);
-		if (data.length > INITIAL_SIZE) {
-			throw new Error('Buffer size exceeded');
-		}
-		var that = this;
-		if (this._mimetype.startsWith('audio')) {
-			fs.appendFile('./audio.ts.m4a',new Buffer(data,'binary'),'binary',function(){
-				that.emit('onupdateend');
-				that.emit('updateend');
-			});
-		}
-		else if (this._mimetype.startsWith('video')) {
-			fs.appendFile('./video.ts.mp4',new Buffer(data,'binary'),'binary',function(){
-				that.emit('onupdateend');
-				that.emit('updateend');
-			});
-		}
-		else if (this._mimetype.startsWith('text')) {
-			fs.appendFile('./text.sub',data,'binary',function(){
-				that.emit('onupdateend');
-				that.emit('updateend');
-			});
-		}
-		else {
-			console.log('Unhandled mimetype '+this._mimetype);
-		}
-	}
-	get buffered() {
-		return [];
-	}
-	get mode() {
-		return '';//'sequence';
-	}
-}
-
-class MyMediaSource extends EventEmitter {
-	constructor() {
-		super();
-		this.readyState = 'closed';
-		this._sb = {};
-		return this;
-	}
-	get sourceBuffers() {	
-		var a = [];
-		for (let sb in this._sb) {
-			a.push(this._sb[sb]);
-		}
-		return a;
-	}
-	addEventListener(eventName,callback) {
-		console.log('yelp addEventListener: '+eventName);
-		this.addListener(eventName,callback);
-		this.readyState = 'open';
-		console.log(Object.keys(this._sb).length);
-		if (eventName == 'sourceopen') {
-			console.log('Fired: '+eventName);
-			//this.emit(eventName,this);
-		}
-	}
-	removeEventListener(eventName,blah) {
-		console.log('yelp removeEventListener: '+eventName);
-		console.log(util.inspect(blah));
-		this.removeListener(eventName,blah);
-	}
-	addSourceBuffer(mimetype) {
-		console.log('yelp new buffer for '+mimetype);
-		var nb = new SourceBuffer(mimetype);
-		this._sb[mimetype] = nb;
-		return nb;
-	}
-	endOfStream(error) {
-		console.log('** End of stream: '+error);
-		dummyElement.emit('ended');
-	}
-}
-
-try { fs.unlinkSync('./video.ts.mp4'); } catch (ex) {}
-try { fs.unlinkSync('./audio.ts.m4a'); } catch (ex) {}
-try { fs.unlinkSync('./text.sub'); } catch (ex) {}
-
-const dummyElement = new HTMLVideoElement();
-
-var msArray = [];
-
-global.window = {};
-global.window.URL = global.URL = URL;
-global.window.URL.createObjectURL = function(ms) {
-	console.log('yelp coURL '+util.inspect(ms));
-	ms.emit('sourceopen'); //new
-	return URL.parse('test://');
-};
-global.window.URL.revokeObjectURL = function(ms) {
-	console.log('yelp roURL '+util.inspect(ms));
-};
-global.window.location = {};
-global.window.location.href = 'http://there.not/';
-global.window.dashjs = {}; // odd but there you go
-global.window.MediaSource = global.MediaSource = function(){
-	var ms = new MyMediaSource();
-	msArray.push(ms);
-	return ms;
-};
-global.MediaSource.isTypeSupported = function(codec){return true}; // we can play anything
-
-global.window.addEventListener = function(event,listener) {console.log('Wanted window event')};
-global.document = {};
-global.document.readyState = 'complete';
-global.document.querySelectorAll = function(x){return[dummyElement]};
-global.window.document = global.document;
-global.window.DOMParser = require('xmldom').DOMParser; 
-global.window.performance = global.performance = {};
-global.window.performance.now = function() {return new Date();};
-global.window.setTimeout = setTimeout;
-global.window.clearTimeout = clearTimeout;
-global.navigator = {};
-global.navigator.userAgent = 'like Chrome';
-global.self = {};
-global.self.console = console;
-
-var player;
-
-dummyElement.addEventListener = dummyElement.addListener;
-
-dummyElement.pause = function() {
-	console.log('Paused');
-	dummyElement.emit('pause');
-	dummyElement.emit('play');
-	return false;
-};
-dummyElement.preload = 'auto';
-dummyElement.buffered = {};
-dummyElement.height = 1080;
-dummyElement.width = 1920;
-dummyElement.loop = false;
-dummyElement.played = {};
-dummyElement.removeAttribute = function(attr){};
-dummyElement.load = function(l){console.log('**:'+util.inspect(this))};
-dummyElement.canPlayType = function(codec){console.log('Got asked about:'+codec);return 'probably'};
-dummyElement.nodeName = 'video';
-dummyElement.playbackQuality = {};
-dummyElement.getVideoPlaybackQuality = function() {return dummyElement.playbackQuality};
-
-//----------------------------------------------------------------------------------
-function downloadDash(url) {
-	var dashjs = require('dashjs');
-	global.dashjs = window.dashjs;
-	var mp = dashjs.MediaPlayer();
-	player = mp.create();
-
-	player.on('manifestUpdated',function(m){
-		console.log('* Got manifestUpdated');
-		console.log(util.inspect(m));
-	},'dasher');
-	player.on('metricAdded',function(m){
-		//console.log('* Got metricadded');
-		//console.log(util.inspect(m));
-	},'dasher');
-	player.on('loadedMetadata',function(m){
-		console.log('* Got loadedmetadata');
-		console.log(util.inspect(m));
-		dummyElement.emit('loadedmetadata');
-	},'dasher');
-	player.on('playbackStarted',function(e){
-		console.log('Got a playbackStarted event');
-		console.log(util.inspect(e));
-		//console.log(util.inspect(dummyElement));
-		//dummyElement.emit('play'); // calling play here seems to continue the playback?
-		dummyElement.emit('playing');
-		dummyElement.emit('canplay');
-		dummyElement.emit('progress');
-	},'dasher');
-	player.on('log',function(l){
-		//console.log(l);
-	},'dasher');
-	player.on('playbackEnded',function(){
-		//dummyElement.emit('ended'); // makes playback loop?
-	},'dasher');
-	player.on('streamTeardownComplete',function(e){
-		console.log(util.inspect(e));
-		dummyElement.emit('ended');
-	},'dasher');
-
-	var debug = player.getDebug();
-	console.log(util.inspect(debug));
-	debug.setLogToBrowserConsole(true);
-	debug.setLogTimestampVisible(true);
-	debug.log('Testing debug logging');
-
-	console.log('About to call init');
-	player.initialize(dummyElement, url, false); // does an attachSource, last param is autoplay
-
-	console.log(util.inspect(player));
-	console.log('About to call seek');
-	player.setCurrentTrack(0);
-	dummyElement.emit('seeking');
-	player.seek(0);
-}
-
-//----------------------------------------------------------------------------------
-function downloadHls(url) {
-	global.navigator.userAgent = 'like Edge';
-	dummyElement.addTextTrack = function(tt){
-		console.log('** Adding textTrack '+util.inspect(tt));
-		return [{}];
-	};
-	dummyElement.textTracks = {};
-	dummyElement.textTracks.addEventListener = function(e,cb) {
-		console.log('** Adding eventListener: '+e);	
-	};
-	var hls = new Hls({debug:true,autoStartLoad:true});
-	console.log('Support sufficient: '+Hls.isSupported());
-	hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-		console.log("video and hls.js are now bound together !");
-    	//hls.loadSource('http://www.streambox.fr/playlists/test_001/stream.m3u8');
-    	hls.loadSource(url);
-	});
-    hls.on(Hls.Events.MANIFEST_PARSED,function(n,m) {
-	  console.log('Got manifest_parsed');
-	  console.log(util.inspect(m));
-      //video.play();
-	  dummyElement.paused = false;
-	  dummyElement.currentTime = 0;
-	  dummyElement.emit('pause');
-	  dummyElement.emit('playing');
-	  //hls.startLoad(-1);
-	});
-    hls.attachMedia(dummyElement);
-}
-
-//----------------------------------------------------------------------------------
 
 // EMBEDS
 
@@ -704,19 +447,15 @@ client.on("message", async message => {
 			const e = await message.channel.send("You are not in a voice channel!")
 		} else if(message.member.voice.channel) {
 			console.log("Joined voice channel");
-			const connection = await message.member.voice.channel.join();
-			console.log("Playing Prambors");
-			downloadHls('http://hls.rastream.com/masima-pramborsjakarta.web.hls/playlist.m3u8?listeningSessionID=5e54063fa0af4f01_5079305_wyn3gO0h_MTAzLjIxLjgxLjM6ODA!_000000dE2qB&downloadSessionID=0&awparams=companionads%3Atrue%3Btags%3Aradioactive%3Bstationid%3Amasima-pramborsjakarta&playerid=Prambors_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE1ODc2NDQxMTksImV4cCI6MTU4NzczMDUxOX0.a3XUDuK6naFDqNezlwAbz-6xDJK6oWf9AV2z5Zj_omM&lan=%5B%22en%22%5D&setLanguage=true');
-			const dispatcher = connection.play(fs.createReadStream('audio.ts.m4a'));
-			dispatcher.on('start', () => {
-			console.log('audio.mp3 is now playing!');
-			});
-			dispatcher.on('finish', () => {
-				console.log('audio.mp3 has finished playing!');
+			const connection = await message.member.voice.channel.join().then(connection => {
+			  require('http').get("http://masima.rastream.com/masima-pramborsjakarta", (res) => {
+				connection.play(res).on('error', err => {
+				  client.logger.error(err);
+				  connection.play(res);
+				})
+			  })
 			})
-			dispatcher.on('error', console.error);
-		}		
-	}
+		}
 })
 
 
