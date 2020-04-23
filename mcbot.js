@@ -465,7 +465,7 @@ client.on("message", async message => {
 			// dispatcher.on('error', console.error);
 		// }		
 	// }
-// })
+})
 
 
 // Reset the bot periodically if the checking routine stopped.
