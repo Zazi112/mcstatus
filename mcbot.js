@@ -12,8 +12,9 @@
 
 
 const Discord = require("discord.js");
-const client = new Discord.Client();
+const fs = require('fs');
 const node = require('nodeactyl');
+const client = new Discord.Client();
 const nodeClient = node.Client;
 var request = require('request');
 var mcIP = process.env.mcip; // Read var "mcip" from Heroku ENV
@@ -219,7 +220,7 @@ client.on("message", async message => {
 						client.user.setActivity("API error!", { type: 'PLAYING' })
 					}
 				});
-			},5000);
+			},10000);
 		} else {
 			// Routine is already running
 			// Send error message
@@ -432,6 +433,22 @@ client.on("message", async message => {
 		  }
 		}
 		const hm = await message.channel.send({ embed: help });
+	}
+	
+// radio listening command
+
+	if(command === "radio") {
+		message.delete().catch(O_o={});
+		console.log("Radio command issude");
+		if(message.member.voice.channel == null) {
+			console.log("User not in voice channel");
+			const e = await message.channel.send("You are not in a voice channel!")
+		} else if(message.member.voice.channel) {
+			console.log("Joined voice channel");
+			const connection = await message.member.voice.channel.join();
+			console.log("Playing Prambors");
+			const dispatcher = connection.play('http://masima.rastream.com/masima-pramborsjakarta');
+		}		
 	}
 })
 
