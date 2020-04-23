@@ -448,17 +448,8 @@ client.on("message", async message => {
 		} else if(message.member.voice.channel) {
 			console.log("Joined voice channel");
 			const connection = await message.member.voice.channel.join();
-			const stream = () => {
-			   return request.get({
-						   uri: 'masima.rastream.com/masima-pramborsjakarta',
-						   followAllRedirects: true,
-						   encoding: null
-					   });
-				   }
-			console.log(stream);
-			
 			console.log("Playing Prambors");
-			const dispatcher = connection.play(fs.createReadStream(stream))
+			const dispatcher = connection.play(fs.createReadStream('http://masima.rastream.com/masima-pramborsjakarta'))
 			dispatcher.on('start', () => {
 			console.log('audio.mp3 is now playing!');
 			});
