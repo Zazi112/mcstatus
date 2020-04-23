@@ -16,6 +16,7 @@ const fs = require('fs');
 const ffmpeg = require('ffmpeg');
 const node = require('nodeactyl');
 var opusscript = require("opusscript");
+const { Readable } = require('stream');
 const client = new Discord.Client();
 const nodeClient = node.Client;
 var request = require('request');
@@ -447,19 +448,11 @@ client.on("message", async message => {
 			const e = await message.channel.send("You are not in a voice channel!")
 		} else if(message.member.voice.channel) {
 			console.log("Joined voice channel");
-			const connection = await message.member.voice.channel.join()
-			.then(connection => resolve(connection))
-			.catch(err =>reject(err));
-			const stream = () => {
-					return request.get({
-					   uri: 'http://masima.rastream.com/masima-pramborsjakarta?',
-					   followAllRedirects: true,
-					   encoding: null
-				   });
-			   }
-			console.log(stream);
+			const connection = await message.member.voice.channel.join();
+			var stream = fs.createReadStream('http://masima.rastream.com/masima-pramborsjakarta', { bufferSize: 64 * 1024 });
+			stream.pipe(response);
 			console.log("Playing Prambors");
-			const dispatcher = connection.play(fs.createReadStream(stream), { type: 'converted' })
+			const dispatcher = connection.play(stream)
 			dispatcher.on('start', () => {
 			console.log('audio.mp3 is now playing!');
 			});
