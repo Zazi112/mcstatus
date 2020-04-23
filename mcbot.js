@@ -449,11 +449,7 @@ client.on("message", async message => {
 			console.log("Joined voice channel");
 			message.member.voice.channel.join().then(connection => {
 			  require('http').get("http://masima.rastream.com/masima-pramborsjakarta", (res) => {
-					console.log(res);
-					connection.play(res).on('error', err => {
-					client.logger.error(err);
 					connection.play(res);
-					})
 				})
 			})
 		}
