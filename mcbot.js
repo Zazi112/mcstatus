@@ -447,13 +447,14 @@ client.on("message", async message => {
 			const e = await message.channel.send("You are not in a voice channel!")
 		} else if(message.member.voice.channel) {
 			console.log("Joined voice channel");
-			const connection = await message.member.voice.channel.join().then(connection => {
+			message.member.voice.channel.join().then(connection => {
 			  require('http').get("http://masima.rastream.com/masima-pramborsjakarta", (res) => {
-				connection.play(res).on('error', err => {
-				  client.logger.error(err);
-				  connection.play(res);
+					console.log(res);
+					connection.play(res).on('error', err => {
+					client.logger.error(err);
+					connection.play(res);
+					})
 				})
-			  })
 			})
 		}
 	}
