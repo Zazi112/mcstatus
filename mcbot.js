@@ -442,17 +442,14 @@ client.on("message", async message => {
 	if(command === "radio") {
 		message.delete().catch(O_o={});
 		console.log("Radio command issude");
-		if(message.member.voice.channel == null) {
+		if(!message.member.voice.channel) {
 			console.log("User not in voice channel");
 			const e = await message.channel.send("You are not in a voice channel!")
 		} else if(message.member.voice.channel) {
 			console.log("Joined voice channel");
 			const connection = await message.member.voice.channel.join();
 			console.log("Playing Prambors");
-			const dispatcher = connection.playArbitraryInput('http://masima.rastream.com/masima-pramborsjakarta')
-			.catch(error =>{
-				console.log(error)
-			});
+			const dispatcher = connection.play(fs.createReadStream('http://masima.rastream.com/masima-pramborsjakarta'))
 		}		
 	}
 })
