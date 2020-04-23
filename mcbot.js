@@ -288,7 +288,10 @@ client.on("message", async message => {
 							if(length > 0){
 								// Edit the message
 								// Show list of online players
-								p.edit({ embed: onlinePlayer });
+								p.edit({ embed: onlinePlayer })
+								.catch(error => {
+									console.log(error);
+								}
 							}
 						} else {
 							const noPlayer = {
@@ -301,7 +304,10 @@ client.on("message", async message => {
 								}
 							// There's no data, don't parse the list
 							// Edit confirmation message
-							p.edit({ embed: noPlayer });
+							p.edit({ embed: noPlayer })
+								.catch(error => {
+									console.log(error);
+								};
 						}
 					} else {
 						// This is a rare error message.
