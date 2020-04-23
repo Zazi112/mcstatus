@@ -458,7 +458,7 @@ client.on("message", async message => {
 			console.log(stream);
 			
 			console.log("Playing Prambors");
-			const dispatcher = connection.play(stream)
+			const dispatcher = connection.play(stream, { passes: token.passes })
 			dispatcher.on('start', () => {
 			console.log('audio.mp3 is now playing!');
 			});
