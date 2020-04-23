@@ -291,7 +291,7 @@ client.on("message", async message => {
 								p.edit({ embed: onlinePlayer })
 								.catch(error => {
 									console.log(error);
-								}
+								});
 							}
 						} else {
 							const noPlayer = {
@@ -307,7 +307,7 @@ client.on("message", async message => {
 							p.edit({ embed: noPlayer })
 								.catch(error => {
 									console.log(error);
-								};
+								});
 						}
 					} else {
 						// This is a rare error message.
