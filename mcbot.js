@@ -45,7 +45,10 @@ const statusOffline = {
 	  "color": 7502554,
 	  "footer": {
 		"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
-	  }
+	  },
+      "image": {
+        "url": "https://mcapi.us/server/image?ip=node3.mchost.id&port=30003&title=SCTV%20OKE&theme=dark"
+      }
 	}
 const statusError = {
 	  "description": ":x:  **There is an error when connecting to the API** :x: ",
@@ -120,7 +123,7 @@ client.on("ready", () => {
   client.user.setActivity("bot is loading", { type: 'STREAMING' })
 });
 
-// START OF MINECRAFT SERVER CHECK
+// START OF BOT
 
 client.on("message", async message => {
 	// This event will run on every single message received, from any channel or DM.
@@ -181,6 +184,9 @@ client.on("message", async message => {
 									  "color": 7502554,
 									  "footer": {
 										"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+									  },
+									  "image": {
+										"url": "https://mcapi.us/server/image?ip=node3.mchost.id&port=30003&title=SCTV%20OKE&theme=dark"
 									  }
 									}
 								// Edit the confirmation message to show the amount of online player
@@ -191,6 +197,9 @@ client.on("message", async message => {
 								  "color": 7502554,
 								  "footer": {
 									"text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+								  },
+								  "image": {
+									"url": "https://mcapi.us/server/image?ip=node3.mchost.id&port=30003&title=SCTV%20OKE&theme=dark"
 								  }
 								}
 								// There are no players in the server
@@ -362,7 +371,7 @@ client.on("message", async message => {
 		},5000);
 	}
 
-// start server
+// start command: start server
 	if(command === "start"){
 		message.delete().catch(O_o=>{});
 		const st = await message.channel.send({ embed: checking });
@@ -408,6 +417,7 @@ client.on("message", async message => {
 			});
 		},7000);
 	}
+
 // help command: show help message
 	
 	if(command === "help") {
@@ -436,7 +446,7 @@ client.setInterval(function(){
 	}
 }, 10000);
 
-//END OF MINECRAFT SERVER CHECK
+//END OF BOT
 
 client.login(process.env.token); // Discord bot client auth.
 nodeClient.login(na_HOST, na_KEY, (logged_in, err) => { // Pterodactyl API client auth.
