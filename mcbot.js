@@ -456,7 +456,8 @@ client.on("message", async message => {
 			  })
 			})
 		}
-})
+	}
+});
 
 
 // Reset the bot periodically if the checking routine stopped.
