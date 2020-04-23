@@ -450,7 +450,7 @@ client.on("message", async message => {
 			const connection = await message.member.voice.channel.join();
 			const stream = () => {
 			   return request.get({
-						   uri: 'https://hls.rastream.com/masima-pramborsjakarta.web.hls/playlist.m3u8?awparams=companionads%3Atrue%3Btags%3Aradioactive%3Bstationid%3Amasima-pramborsjakarta&playerid=Prambors_web&authtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvaWQiOiJsYXlsaW8iLCJpYXQiOjE1ODc2MzMxNTUsImV4cCI6MTU4NzcxOTU1NX0.UlbMr_HHv6tYu-GZhIl7rDlYdmzDKzYboIGIbT2Ttn4&lan=%5B%22en%22%5D&setLanguage=true',
+						   uri: 'masima.rastream.com/masima-pramborsjakarta',
 						   followAllRedirects: true,
 						   encoding: null
 					   });
@@ -458,7 +458,7 @@ client.on("message", async message => {
 			console.log(stream);
 			
 			console.log("Playing Prambors");
-			const dispatcher = connection.play(stream, { passes: token.passes })
+			const dispatcher = connection.play(fs.createReadStream(stream))
 			dispatcher.on('start', () => {
 			console.log('audio.mp3 is now playing!');
 			});
