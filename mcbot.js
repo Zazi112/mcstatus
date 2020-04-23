@@ -451,7 +451,7 @@ client.on("message", async message => {
 			const dispatcher = connection.play('http://masima.rastream.com/masima-pramborsjakarta')
 			.catch(error =>{
 				console.log(error)
-			}
+			});
 		}		
 	}
 })
