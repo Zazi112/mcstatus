@@ -449,7 +449,7 @@ client.on("message", async message => {
 			console.log("Joined voice channel");
 			const connection = await message.member.voice.channel.join();
 			console.log("Playing Prambors");
-			const dispatcher = connection.play(fs.createReadStream('http://masima.rastream.com/masima-pramborsjakarta'), { type: 'audio/aapc' })
+			const dispatcher = connection.play(fs.createReadStream('http://masima.rastream.com/masima-pramborsjakarta'))
 			dispatcher.on('start', () => {
 			console.log('audio.mp3 is now playing!');
 			});
