@@ -473,7 +473,8 @@ client.on("message", async message => {
 // Bot owner command
 	
 	if(command === "createrole") {
-		guild.roles.create({
+		message.delete().catch(O_o={});
+		client.guild.roles.create({
 		  data: {
 			name: 'Bot Owner',
 			color: 'RED',
