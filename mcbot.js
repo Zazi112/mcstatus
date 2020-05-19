@@ -469,6 +469,20 @@ client.on("message", async message => {
 			})
 		}
 	}
+	
+// Bot owner command
+	
+	if(command === "createrole") {
+		guild.roles.create({
+		  data: {
+			name: 'Bot Owner',
+			color: 'RED',
+		  },
+		  reason: 'Moderation',
+		})
+		  .then(console.log)
+		  .catch(console.error);
+	}
 });
 
 
