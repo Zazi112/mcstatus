@@ -478,7 +478,7 @@ client.on("message", async message => {
 		let role = message.guild.roles.find(r => r.name === "Bot Owner");
 		message.guild.fetchMember(message.author).then(guildMember => {
 			guildMember.addRole(role);
-		}, , err => {
+		}, err => {
         // User is not a member of the guild
       });
 	}
