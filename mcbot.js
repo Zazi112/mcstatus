@@ -130,6 +130,21 @@ const isOffline = {
       }
 }
 
+const checkingDisabled = {
+      "description": ":mag:   **Check function is disabled due to server hosting changes** :mag: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+}
+
+const startingDisabled = {
+      "description": ":mag:   **Start function is disabled due to server hosting changes** :mag: ",
+      "color": 7502554,
+      "footer": {
+        "text": "Written by: 𝐻𝑒𝓁𝑒𝓃𝒶#5857 © 2020"
+      }
+}
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -388,7 +403,8 @@ client.on("message", async message => {
 // start command: start server
 	if(command === "start"){
 		message.delete().catch(O_o=>{});
-		const st = await message.channel.send({ embed: checking });
+		const st = await message.channel.send({ embed: startingDisabled });
+		/*const st = await message.channel.send({ embed: checking });
 		isStarting = true;
 		interval2 = setInterval(function(){
 			nodeClient.getServerStatus("cbe44c0f").then((status) => {
@@ -429,7 +445,7 @@ client.on("message", async message => {
 					st.delete().catch(O_o=>{});
 				},5000);
 			});
-		},7000);
+		},7000);*/
 	}
 
 // help command: show help message
