@@ -1,1 +1,1 @@
-worker: node mcbot.js
+worker: node index.js
